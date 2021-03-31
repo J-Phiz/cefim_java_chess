@@ -1,11 +1,18 @@
 package fr.leonie.jp.chess.model;
 
+import fr.leonie.jp.chess.enumeration.CouleurPiece;
+
+import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class Tour extends Piece {
 
-    public Tour(String nom, Couleur couleur, String image) {
-        super(nom, couleur, image);
+    public Tour(String nom, CouleurPiece couleur) {
+        super(
+                nom,
+                couleur,
+                couleur == CouleurPiece.BLANC ? absPath + "white_rook.png": absPath + "black_rook.png"
+        );
     }
 
     @Override

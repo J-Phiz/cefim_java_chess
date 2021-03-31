@@ -1,6 +1,7 @@
 package fr.leonie.jp.chess.model;
 
 import fr.leonie.jp.chess.enumeration.CouleurCarreau;
+import fr.leonie.jp.chess.enumeration.CouleurPiece;
 
 import java.util.ArrayList;
 
@@ -37,11 +38,61 @@ public class Plateau {
     }
 
     public void initialiserPlateau() {
-        // créé les pièces et les place sur les bons carreaux
+        creationAutresPieces(piecesNoires, CouleurPiece.NOIR, 0);
+        creationPions(piecesNoires, CouleurPiece.NOIR, 1);
+        creationPions(piecesBlanches, CouleurPiece.BLANC, 6);
+        creationAutresPieces(piecesBlanches, CouleurPiece.BLANC, 7);
+
+    }
+
+    private void creationPions(ArrayList<Piece> pieces, CouleurPiece couleur, int ligne) {
+        Piece piece;
+
+        for (int i = 0; i < 8 ; i++) {
+            piece = new Pion("Pion" + i, couleur);
+            carreaux[ligne][i].setContenu(piece);
+            pieces.add(piece);
+        }
+    }
+
+    private void creationAutresPieces(ArrayList<Piece> pieces, CouleurPiece couleur, int ligne) {
+        Piece piece;
+
+        piece = new Tour("Tour1", couleur);
+        carreaux[ligne][0].setContenu(piece);
+        pieces.add(piece);
+
+        piece = new Cavalier("Cavalier1", couleur);
+        carreaux[ligne][1].setContenu(piece);
+        pieces.add(piece);
+
+        piece = new Fou("Fou1", couleur);
+        carreaux[ligne][2].setContenu(piece);
+        pieces.add(piece);
+
+        piece = new Reine("Reine", couleur);
+        carreaux[ligne][3].setContenu(piece);
+        pieces.add(piece);
+
+        piece = new Roi("Roi", couleur);
+        carreaux[ligne][4].setContenu(piece);
+        pieces.add(piece);
+
+        piece = new Fou("Fou2", couleur);
+        carreaux[ligne][5].setContenu(piece);
+        pieces.add(piece);
+
+        piece = new Cavalier("Cavalier2", couleur);
+        carreaux[ligne][6].setContenu(piece);
+        pieces.add(piece);
+
+        piece = new Tour("Tour2", couleur);
+        carreaux[ligne][7].setContenu(piece);
+        pieces.add(piece);
     }
 
     public ArrayList<Carreau> deplacementsPossibles(Carreau carreau) {
-       return null;
+        return null;
     }
 
 }

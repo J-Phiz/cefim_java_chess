@@ -1,18 +1,18 @@
 package fr.leonie.jp.chess.model;
 
+import fr.leonie.jp.chess.enumeration.CouleurPiece;
+
 import java.util.ArrayList;
 
 public abstract class Piece implements Cloneable {
 
-    protected enum Couleur {
-        BLANC, NOIR
-    }
+    protected static final String absPath = System.getProperty("user.dir") + "/src/resources/pieces";
 
     protected final String nom;
-    protected final Couleur couleur;
+    protected final CouleurPiece couleur;
     protected final String image;
 
-    public Piece(String nom, Couleur couleur, String image) {
+    public Piece(String nom, CouleurPiece couleur, String image) {
         this.nom = nom;
         this.couleur = couleur;
         this.image = image;
@@ -29,4 +29,12 @@ public abstract class Piece implements Cloneable {
         return p;
     }
 
+    @Override
+    public String toString() {
+        return "Piece{" +
+                "nom='" + nom + '\'' +
+                ", couleur=" + couleur +
+                ", image='" + image + '\'' +
+                '}';
+    }
 }
