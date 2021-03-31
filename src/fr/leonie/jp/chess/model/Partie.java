@@ -29,8 +29,14 @@ public class Partie {
         plateau.initialiserPlateau();
     }
 
-    public void nouveauDeplacement() {
+    public void nouveauDeplacement(Deplacement deplacement) {
+        //TODO: Supprimer la piece si presente sur le carreau de fin
+        deplacement.getCareauDepart().setContenu(null);
+        deplacement.getCarreauFin().setContenu(deplacement.getPiece());
 
+        deplacements.add(deplacement);
+
+        nbTours++;
     }
 
     public void annulerDeplacement() {

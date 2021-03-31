@@ -2,10 +2,7 @@ package fr.leonie.jp.chess.controller;
 
 import fr.leonie.jp.chess.enumeration.CouleurCarreau;
 import fr.leonie.jp.chess.enumeration.CouleurPiece;
-import fr.leonie.jp.chess.model.Carreau;
-import fr.leonie.jp.chess.model.Partie;
-import fr.leonie.jp.chess.model.Piece;
-import fr.leonie.jp.chess.model.Plateau;
+import fr.leonie.jp.chess.model.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
@@ -106,11 +103,11 @@ public class ChessController implements Initializable {
 
     private void handlePaneSelection(Carreau carreau) {
         CouleurPiece tourCouleur = partie.getNbTours() % 2 == 0 ? CouleurPiece.BLANC : CouleurPiece.NOIR;
+        Carreau ancienCarreau = plateau.getCarreauSelectionne();
 
         if(carreau.getContenu() != null && carreau.getContenu().getCouleur() == tourCouleur) {
             carreau.setSelectionnee(!carreau.isSelectionnee());
             if(carreau.isSelectionnee()) {
-                Carreau ancienCarreau = plateau.getCarreauSelectionne();
                 if(ancienCarreau != null) {
                     ancienCarreau.setSelectionnee(false);
                 }
@@ -118,6 +115,12 @@ public class ChessController implements Initializable {
             } else {
                 plateau.setCarreauSelectionne(null);
             }
+        } else if(ancienCarreau != null) {
+            Deplacement deplacement = new Deplacement(ancienCarreau.getContenu(), ancienCarreau, carreau);
+            partie.nouveauDeplacement(deplacement);
+
+            ancienCarreau.setSelectionnee(false);
+            plateau.setCarreauSelectionne(null);
         }
 
         updateUI();
