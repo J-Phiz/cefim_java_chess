@@ -42,12 +42,36 @@ public class ChessController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        niceAndClickablePanes();
+    }
+
+    private void niceAndClickablePanes() {
         for(int i = 0; i < 8; i++) {
             for(int j = 0; j < 8; j++) {
-                System.out.println("paneCarreau" + i + j);
                 try {
                     Field field = ChessController.class.getDeclaredField("paneCarreau" + i + j);
-                    ((Pane) field.get(this)).setStyle("-fx-background-color:" + plateau.getCarreaux()[i][j].getCouleur().getColorValue() + ";");
+                    Carreau carreau = plateau.getCarreaux()[i][j];
+                    Pane pane = (Pane) field.get(this);
+                    pane.setStyle("-fx-background-color:" + carreau.getCouleur().getColorValue() + ";");
+                    pane.setOnMouseClicked(mouseEvent -> {
+                        carreau.setSelectionnee(!carreau.isSelectionnee());
+                        if(carreau.isSelectionnee()) {
+                            Carreau ancienCarreau = plateau.getCarreauSelectionne();
+                            if(ancienCarreau != null) {
+                                ancienCarreau.setSelectionnee(false);
+                                try {
+                                    ((Pane) ChessController.class.getDeclaredField("paneCarreau" + ancienCarreau.getLigne() + ancienCarreau.getColonne()).get(this)).setStyle("-fx-background-color:" + ancienCarreau.getCouleur().getColorValue() + ";");
+                                } catch(Exception exception) {
+                                    //
+                                }
+                            }
+                            plateau.setCarreauSelectionne(carreau);
+                            pane.setStyle("-fx-background-color:RED;");
+                        } else {
+                            pane.setStyle("-fx-background-color:" + carreau.getCouleur().getColorValue() + ";");
+                            plateau.setCarreauSelectionne(null);
+                        }
+                    });
                 } catch(Exception exception) {
                     //
                 }

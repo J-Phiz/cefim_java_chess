@@ -10,6 +10,7 @@ public class Plateau {
     private final Carreau[][] carreaux = new Carreau[8][8];
     private final ArrayList<Piece> piecesBlanches;
     private final ArrayList<Piece> piecesNoires;
+    private Carreau carreauSelectionne = null;
 
     private static final Plateau INSTANCE = new Plateau();
 
@@ -22,7 +23,7 @@ public class Plateau {
                 } else {
                     couleur = CouleurCarreau.ROSE;
                 }
-                carreaux[i][j] = new Carreau(couleur);
+                carreaux[i][j] = new Carreau(couleur, i, j);
             }
         }
         piecesBlanches = new ArrayList<Piece>();
@@ -35,6 +36,15 @@ public class Plateau {
 
     public Carreau[][] getCarreaux() {
         return carreaux;
+    }
+
+    public Carreau getCarreauSelectionne() {
+        // on renvoi l'instance susceptible d'être modifiée
+        return carreauSelectionne;
+    }
+
+    public void setCarreauSelectionne(Carreau carreauSelectionne) {
+        this.carreauSelectionne = carreauSelectionne;
     }
 
     public void initialiserPlateau() {

@@ -7,11 +7,15 @@ public class Carreau {
     private final CouleurCarreau couleur;
     private Piece contenu;
     private boolean selectionnee;
+    private final int colonne;
+    private final int ligne;
 
-    public Carreau(CouleurCarreau couleur) {
+    public Carreau(CouleurCarreau couleur, int ligne, int colonne) {
         this.couleur = couleur;
         contenu = null;
         selectionnee = false;
+        this.colonne = colonne;
+        this.ligne = ligne;
     }
 
     public Piece getContenu() {
@@ -33,5 +37,13 @@ public class Carreau {
 
     public CouleurCarreau getCouleur() {
         return couleur;
+    }
+
+    public int getLigne() {
+        return ligne;
+    }
+
+    public int getColonne() {
+        return colonne;
     }
 }
