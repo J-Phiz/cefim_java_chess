@@ -48,8 +48,38 @@ public class ChessController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        plateau.initialiserPlateau();
         niceAndClickablePanes();
+        partie.nouvellePartie();
+        updateUI();
+    }
+
+    private void updateUI() {
+        for(int i = 0; i < 8; i++) {
+            for(int j = 0; j < 8; j++) {
+                try {
+                    Field field = ChessController.class.getDeclaredField("paneCarreau" + i + j);
+                    Carreau carreau = plateau.getCarreaux()[i][j];
+                    Pane pane = (Pane) field.get(this);
+
+                    pane.setStyle("-fx-background-color:" + carreau.getCouleur().getColorValue() + ";");
+                    if (carreau.getContenu() != null) {
+                        pane.getChildren().setAll(new ImageView(new Image(
+                                "file:" + carreau.getContenu().getImage(),
+                                100,
+                                100,
+                                false,
+                                true
+                        )));
+                    } else {
+                        pane.getChildren().removeAll();
+                    }
+                } catch(Exception exception) {
+                    System.out.println(
+                            "Erreur dans la récupération du pane[" + i + "][" + j + "] : " + exception.getMessage()
+                    );
+                }
+            }
+        }
     }
 
     private void niceAndClickablePanes() {
@@ -60,9 +90,6 @@ public class ChessController implements Initializable {
                     Carreau carreau = plateau.getCarreaux()[i][j];
                     Pane pane = (Pane) field.get(this);
                     pane.setStyle("-fx-background-color:" + carreau.getCouleur().getColorValue() + ";");
-                    if (carreau.getContenu() != null) {
-                        showPieceOnPane(pane, carreau.getContenu());
-                    }
                     pane.setOnMouseClicked(mouseEvent -> {
                         handlePaneSelection(pane, carreau);
                     });
@@ -71,15 +98,6 @@ public class ChessController implements Initializable {
                 }
             }
         }
-    }
-
-    private void showPieceOnPane(Pane pane, Piece piece) {
-        ImageView imageView = new ImageView(new Image("file:" + piece.getImage(), 100, 100, false, true));
-        pane.getChildren().setAll(imageView);
-    }
-
-    private void hidePieceOnPane(Pane pane) {
-        pane.getChildren().removeAll();
     }
 
     private void handlePaneSelection(Pane pane, Carreau carreau) {

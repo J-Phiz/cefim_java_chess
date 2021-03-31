@@ -26,7 +26,7 @@ public class Partie {
     }
 
     public void nouvellePartie() {
-        // appelle plateau.initialiserPlateau()
+        plateau.initialiserPlateau();
     }
 
     public void nouveauDeplacement() {
