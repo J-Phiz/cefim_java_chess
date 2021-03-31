@@ -6,9 +6,9 @@ import java.util.ArrayList;
 
 public class Roi extends Piece {
 
-    public Roi(String nom, CouleurPiece couleur) {
+    public Roi(CouleurPiece couleur) {
         super(
-                nom,
+                "roi",
                 couleur,
                 couleur == CouleurPiece.BLANC ? absPath + "white_king.png": absPath + "black_king.png"
         );

@@ -2,6 +2,7 @@ package fr.leonie.jp.chess.model;
 
 import fr.leonie.jp.chess.enumeration.CouleurCarreau;
 import fr.leonie.jp.chess.enumeration.CouleurPiece;
+import fr.leonie.jp.chess.enumeration.TypePiece;
 
 import java.util.ArrayList;
 
@@ -59,46 +60,42 @@ public class Plateau {
         Piece piece;
 
         for (int i = 0; i < 8 ; i++) {
-            piece = new Pion("Pion" + i, couleur);
+            piece = PieceFactory.getPiece(TypePiece.PION, couleur);
             carreaux[i][ligne].setContenu(piece);
             pieces.add(piece);
         }
     }
 
     private void creationAutresPieces(ArrayList<Piece> pieces, CouleurPiece couleur, int ligne) {
-        Piece piece;
+        Piece piece = null;
 
-        piece = new Tour("Tour1", couleur);
-        carreaux[0][ligne].setContenu(piece);
-        pieces.add(piece);
+        for (int i = 0; i < 8; i++) {
+            switch(i) {
+                case 0:
+                case 7:
+                    piece = PieceFactory.getPiece(TypePiece.TOUR, couleur);
+                    break;
+                case 1:
+                case 6:
+                    piece = PieceFactory.getPiece(TypePiece.CAVALIER, couleur);
+                    break;
+                case 2:
+                case 5:
+                    piece = PieceFactory.getPiece(TypePiece.FOU, couleur);
+                    break;
+                case 3:
+                    piece = PieceFactory.getPiece(TypePiece.REINE, couleur);
+                    break;
+                case 4:
+                    piece = PieceFactory.getPiece(TypePiece.ROI, couleur);
+                    break;
+            }
 
-        piece = new Cavalier("Cavalier1", couleur);
-        carreaux[1][ligne].setContenu(piece);
-        pieces.add(piece);
-
-        piece = new Fou("Fou1", couleur);
-        carreaux[2][ligne].setContenu(piece);
-        pieces.add(piece);
-
-        piece = new Reine("Reine", couleur);
-        carreaux[3][ligne].setContenu(piece);
-        pieces.add(piece);
-
-        piece = new Roi("Roi", couleur);
-        carreaux[4][ligne].setContenu(piece);
-        pieces.add(piece);
-
-        piece = new Fou("Fou2", couleur);
-        carreaux[5][ligne].setContenu(piece);
-        pieces.add(piece);
-
-        piece = new Cavalier("Cavalier2", couleur);
-        carreaux[6][ligne].setContenu(piece);
-        pieces.add(piece);
-
-        piece = new Tour("Tour2", couleur);
-        carreaux[7][ligne].setContenu(piece);
-        pieces.add(piece);
+            if(piece != null) {
+                carreaux[i][ligne].setContenu(piece);
+                pieces.add(piece);
+            }
+        }
     }
 
     public ArrayList<Carreau> deplacementsPossibles(Carreau carreau) {

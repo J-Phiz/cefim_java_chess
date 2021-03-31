@@ -6,9 +6,9 @@ import java.util.ArrayList;
 
 public class Pion extends Piece {
 
-    public Pion(String nom, CouleurPiece couleur) {
+    public Pion(CouleurPiece couleur) {
         super(
-                nom,
+                "pion",
                 couleur,
                 couleur == CouleurPiece.BLANC ? absPath + "white_pawn.png": absPath + "black_pawn.png"
         );
