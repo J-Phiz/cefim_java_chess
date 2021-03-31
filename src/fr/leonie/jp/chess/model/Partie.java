@@ -40,7 +40,19 @@ public class Partie {
     }
 
     public void annulerDeplacement() {
+        int indexDernierDeplacement = deplacements.size() - 1;
 
+        if(indexDernierDeplacement >= 0) { // inutile en realite car bouton disable
+            Deplacement deplacement = deplacements.get(indexDernierDeplacement);
+
+            deplacement.getCareauDepart().setContenu(deplacement.getPiece());
+            //TODO: Remmettre la piece si presente sur le carreau de fin (où stocke t on cette info ??)
+            deplacement.getCarreauFin().setContenu(null);
+
+            deplacements.remove(indexDernierDeplacement);
+
+            nbTours--;
+        }
     }
 
 }
