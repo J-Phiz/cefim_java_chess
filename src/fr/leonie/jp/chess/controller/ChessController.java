@@ -48,7 +48,7 @@ public class ChessController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        niceAndClickablePanes();
+        clickablePanes();
         partie.nouvellePartie();
         updateUI();
     }
@@ -61,7 +61,11 @@ public class ChessController implements Initializable {
                     Carreau carreau = plateau.getCarreaux()[i][j];
                     Pane pane = (Pane) field.get(this);
 
-                    pane.setStyle("-fx-background-color:" + carreau.getCouleur().getColorValue() + ";");
+                    if (carreau.isSelectionnee()) {
+                        pane.setStyle("-fx-background-color:RED;");
+                    } else {
+                        pane.setStyle("-fx-background-color:" + carreau.getCouleur().getColorValue() + ";");
+                    }
                     if (carreau.getContenu() != null) {
                         pane.getChildren().setAll(new ImageView(new Image(
                                 "file:" + carreau.getContenu().getImage(),
@@ -82,46 +86,41 @@ public class ChessController implements Initializable {
         }
     }
 
-    private void niceAndClickablePanes() {
+    private void clickablePanes() {
         for(int i = 0; i < 8; i++) {
             for(int j = 0; j < 8; j++) {
                 try {
                     Field field = ChessController.class.getDeclaredField("paneCarreau" + i + j);
-                    Carreau carreau = plateau.getCarreaux()[i][j];
                     Pane pane = (Pane) field.get(this);
-                    pane.setStyle("-fx-background-color:" + carreau.getCouleur().getColorValue() + ";");
-                    pane.setOnMouseClicked(mouseEvent -> {
-                        handlePaneSelection(pane, carreau);
-                    });
+                    Carreau carreau = plateau.getCarreaux()[i][j];
+
+                    pane.setOnMouseClicked(mouseEvent -> handlePaneSelection(carreau));
                 } catch(Exception exception) {
-                    System.out.println("Erreur dans la récupération du pane[" + i + "][" + j + "] : " + exception.getMessage());
+                    System.out.println(
+                            "Erreur dans la récupération du pane[" + i + "][" + j + "] : " + exception.getMessage()
+                    );
                 }
             }
         }
     }
 
-    private void handlePaneSelection(Pane pane, Carreau carreau) {
+    private void handlePaneSelection(Carreau carreau) {
         CouleurPiece tourCouleur = partie.getNbTours() % 2 == 0 ? CouleurPiece.BLANC : CouleurPiece.NOIR;
 
-        if(carreau.getContenu() != null && carreau.getContenu().getCouleur().equals(tourCouleur)) {
+        if(carreau.getContenu() != null && carreau.getContenu().getCouleur() == tourCouleur) {
             carreau.setSelectionnee(!carreau.isSelectionnee());
             if(carreau.isSelectionnee()) {
                 Carreau ancienCarreau = plateau.getCarreauSelectionne();
                 if(ancienCarreau != null) {
                     ancienCarreau.setSelectionnee(false);
-                    try {
-                        ((Pane) ChessController.class.getDeclaredField("paneCarreau" + ancienCarreau.getLigne() + ancienCarreau.getColonne()).get(this)).setStyle("-fx-background-color:" + ancienCarreau.getCouleur().getColorValue() + ";");
-                    } catch(Exception exception) {
-                        System.out.println("Erreur dans la récupération du pane[" + ancienCarreau.getLigne() + "][" + ancienCarreau.getColonne() + "] correspondant à l'ancienne sélection : " + exception.getMessage());
-                    }
                 }
                 plateau.setCarreauSelectionne(carreau);
-                pane.setStyle("-fx-background-color:RED;");
             } else {
-                pane.setStyle("-fx-background-color:" + carreau.getCouleur().getColorValue() + ";");
                 plateau.setCarreauSelectionne(null);
             }
         }
+
+        updateUI();
     }
 
 }
