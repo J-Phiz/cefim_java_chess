@@ -60,7 +60,7 @@ public class Plateau {
 
         for (int i = 0; i < 8 ; i++) {
             piece = new Pion("Pion" + i, couleur);
-            carreaux[ligne][i].setContenu(piece);
+            carreaux[i][ligne].setContenu(piece);
             pieces.add(piece);
         }
     }
@@ -69,35 +69,35 @@ public class Plateau {
         Piece piece;
 
         piece = new Tour("Tour1", couleur);
-        carreaux[ligne][0].setContenu(piece);
+        carreaux[0][ligne].setContenu(piece);
         pieces.add(piece);
 
         piece = new Cavalier("Cavalier1", couleur);
-        carreaux[ligne][1].setContenu(piece);
+        carreaux[1][ligne].setContenu(piece);
         pieces.add(piece);
 
         piece = new Fou("Fou1", couleur);
-        carreaux[ligne][2].setContenu(piece);
+        carreaux[2][ligne].setContenu(piece);
         pieces.add(piece);
 
         piece = new Reine("Reine", couleur);
-        carreaux[ligne][3].setContenu(piece);
+        carreaux[3][ligne].setContenu(piece);
         pieces.add(piece);
 
         piece = new Roi("Roi", couleur);
-        carreaux[ligne][4].setContenu(piece);
+        carreaux[4][ligne].setContenu(piece);
         pieces.add(piece);
 
         piece = new Fou("Fou2", couleur);
-        carreaux[ligne][5].setContenu(piece);
+        carreaux[5][ligne].setContenu(piece);
         pieces.add(piece);
 
         piece = new Cavalier("Cavalier2", couleur);
-        carreaux[ligne][6].setContenu(piece);
+        carreaux[6][ligne].setContenu(piece);
         pieces.add(piece);
 
         piece = new Tour("Tour2", couleur);
-        carreaux[ligne][7].setContenu(piece);
+        carreaux[7][ligne].setContenu(piece);
         pieces.add(piece);
     }
 

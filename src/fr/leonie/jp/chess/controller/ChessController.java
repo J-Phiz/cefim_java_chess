@@ -2,9 +2,12 @@ package fr.leonie.jp.chess.controller;
 
 import fr.leonie.jp.chess.enumeration.CouleurCarreau;
 import fr.leonie.jp.chess.model.Carreau;
+import fr.leonie.jp.chess.model.Piece;
 import fr.leonie.jp.chess.model.Plateau;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -42,6 +45,7 @@ public class ChessController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        plateau.initialiserPlateau();
         niceAndClickablePanes();
     }
 
@@ -53,6 +57,9 @@ public class ChessController implements Initializable {
                     Carreau carreau = plateau.getCarreaux()[i][j];
                     Pane pane = (Pane) field.get(this);
                     pane.setStyle("-fx-background-color:" + carreau.getCouleur().getColorValue() + ";");
+                    if (carreau.getContenu() != null) {
+                        showPieceOnPane(pane, carreau.getContenu());
+                    }
                     pane.setOnMouseClicked(mouseEvent -> {
                         carreau.setSelectionnee(!carreau.isSelectionnee());
                         if(carreau.isSelectionnee()) {
@@ -73,9 +80,19 @@ public class ChessController implements Initializable {
                         }
                     });
                 } catch(Exception exception) {
-                    //
+                    System.out.println("Erreur dans la récupération du pane[" + i + "][" + j + "] : " + exception.getMessage());
                 }
             }
         }
     }
+
+    private void showPieceOnPane(Pane pane, Piece piece) {
+        ImageView imageView = new ImageView(new Image("file:" + piece.getImage(), 100, 100, false, true));
+        pane.getChildren().setAll(imageView);
+    }
+
+    private void hidePieceOnPane(Pane pane) {
+        pane.getChildren().removeAll();
+    }
+
 }

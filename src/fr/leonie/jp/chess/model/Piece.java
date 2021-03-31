@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public abstract class Piece implements Cloneable {
 
-    protected static final String absPath = System.getProperty("user.dir") + "/src/resources/pieces";
+    protected static final String absPath = System.getProperty("user.dir") + "/src/resources/pieces/";
 
     protected final String nom;
     protected final CouleurPiece couleur;
@@ -16,6 +16,10 @@ public abstract class Piece implements Cloneable {
         this.nom = nom;
         this.couleur = couleur;
         this.image = image;
+    }
+
+    public String getImage() {
+        return image;
     }
 
     public abstract ArrayList<Deplacement> deplacementsPossibles(Plateau plateau);

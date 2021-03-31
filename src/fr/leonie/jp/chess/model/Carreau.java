@@ -20,7 +20,12 @@ public class Carreau {
 
     public Piece getContenu() {
         // Copie défensive
-        return (Piece) contenu.clone();
+        Piece piece = null;
+
+        if (contenu != null) {
+            piece = (Piece) contenu.clone();
+        }
+        return piece;
     }
 
     public void setContenu(Piece contenu) {
