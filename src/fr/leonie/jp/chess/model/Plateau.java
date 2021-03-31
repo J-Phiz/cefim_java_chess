@@ -16,7 +16,7 @@ public class Plateau {
         CouleurCarreau couleur;
         for(int i = 0; i < 8; i++) {
             for(int j = 0; j < 8; j++) {
-                if(i % 2 == 0 && j % 2 == 1) {
+                if(i % 2 != j % 2) {
                     couleur = CouleurCarreau.BLANC;
                 } else {
                     couleur = CouleurCarreau.ROSE;
@@ -30,6 +30,10 @@ public class Plateau {
 
     public static Plateau getInstance() {
         return INSTANCE;
+    }
+
+    public Carreau[][] getCarreaux() {
+        return carreaux;
     }
 
     public void initialiserPlateau() {

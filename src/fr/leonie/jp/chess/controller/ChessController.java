@@ -1,9 +1,15 @@
 package fr.leonie.jp.chess.controller;
 
+import fr.leonie.jp.chess.enumeration.CouleurCarreau;
+import fr.leonie.jp.chess.model.Carreau;
+import fr.leonie.jp.chess.model.Plateau;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
+import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -32,8 +38,20 @@ public class ChessController implements Initializable {
     @FXML
     private Pane paneCarreau07, paneCarreau17, paneCarreau27, paneCarreau37, paneCarreau47, paneCarreau57, paneCarreau67, paneCarreau77;
 
+    private final Plateau plateau = Plateau.getInstance();
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        for(int i = 0; i < 8; i++) {
+            for(int j = 0; j < 8; j++) {
+                System.out.println("paneCarreau" + i + j);
+                try {
+                    Field field = ChessController.class.getDeclaredField("paneCarreau" + i + j);
+                    ((Pane) field.get(this)).setStyle("-fx-background-color:" + plateau.getCarreaux()[i][j].getCouleur().getColorValue() + ";");
+                } catch(Exception exception) {
+                    //
+                }
+            }
+        }
     }
 }

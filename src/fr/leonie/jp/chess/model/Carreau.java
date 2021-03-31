@@ -30,4 +30,8 @@ public class Carreau {
     public void setSelectionnee(boolean selectionnee) {
         this.selectionnee = selectionnee;
     }
+
+    public CouleurCarreau getCouleur() {
+        return couleur;
+    }
 }
