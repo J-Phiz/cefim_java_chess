@@ -1,7 +1,9 @@
 package fr.leonie.jp.chess.controller;
 
 import fr.leonie.jp.chess.enumeration.CouleurCarreau;
+import fr.leonie.jp.chess.enumeration.CouleurPiece;
 import fr.leonie.jp.chess.model.Carreau;
+import fr.leonie.jp.chess.model.Partie;
 import fr.leonie.jp.chess.model.Piece;
 import fr.leonie.jp.chess.model.Plateau;
 import javafx.fxml.FXML;
@@ -41,6 +43,7 @@ public class ChessController implements Initializable {
     @FXML
     private Pane paneCarreau07, paneCarreau17, paneCarreau27, paneCarreau37, paneCarreau47, paneCarreau57, paneCarreau67, paneCarreau77;
 
+    private final Partie partie = Partie.getInstance();
     private final Plateau plateau = Plateau.getInstance();
 
     @Override
@@ -61,23 +64,7 @@ public class ChessController implements Initializable {
                         showPieceOnPane(pane, carreau.getContenu());
                     }
                     pane.setOnMouseClicked(mouseEvent -> {
-                        carreau.setSelectionnee(!carreau.isSelectionnee());
-                        if(carreau.isSelectionnee()) {
-                            Carreau ancienCarreau = plateau.getCarreauSelectionne();
-                            if(ancienCarreau != null) {
-                                ancienCarreau.setSelectionnee(false);
-                                try {
-                                    ((Pane) ChessController.class.getDeclaredField("paneCarreau" + ancienCarreau.getLigne() + ancienCarreau.getColonne()).get(this)).setStyle("-fx-background-color:" + ancienCarreau.getCouleur().getColorValue() + ";");
-                                } catch(Exception exception) {
-                                    //
-                                }
-                            }
-                            plateau.setCarreauSelectionne(carreau);
-                            pane.setStyle("-fx-background-color:RED;");
-                        } else {
-                            pane.setStyle("-fx-background-color:" + carreau.getCouleur().getColorValue() + ";");
-                            plateau.setCarreauSelectionne(null);
-                        }
+                        handlePaneSelection(pane, carreau);
                     });
                 } catch(Exception exception) {
                     System.out.println("Erreur dans la récupération du pane[" + i + "][" + j + "] : " + exception.getMessage());
@@ -93,6 +80,30 @@ public class ChessController implements Initializable {
 
     private void hidePieceOnPane(Pane pane) {
         pane.getChildren().removeAll();
+    }
+
+    private void handlePaneSelection(Pane pane, Carreau carreau) {
+        CouleurPiece tourCouleur = partie.getNbTours() % 2 == 0 ? CouleurPiece.BLANC : CouleurPiece.NOIR;
+
+        if(carreau.getContenu() != null && carreau.getContenu().getCouleur().equals(tourCouleur)) {
+            carreau.setSelectionnee(!carreau.isSelectionnee());
+            if(carreau.isSelectionnee()) {
+                Carreau ancienCarreau = plateau.getCarreauSelectionne();
+                if(ancienCarreau != null) {
+                    ancienCarreau.setSelectionnee(false);
+                    try {
+                        ((Pane) ChessController.class.getDeclaredField("paneCarreau" + ancienCarreau.getLigne() + ancienCarreau.getColonne()).get(this)).setStyle("-fx-background-color:" + ancienCarreau.getCouleur().getColorValue() + ";");
+                    } catch(Exception exception) {
+                        System.out.println("Erreur dans la récupération du pane[" + ancienCarreau.getLigne() + "][" + ancienCarreau.getColonne() + "] correspondant à l'ancienne sélection : " + exception.getMessage());
+                    }
+                }
+                plateau.setCarreauSelectionne(carreau);
+                pane.setStyle("-fx-background-color:RED;");
+            } else {
+                pane.setStyle("-fx-background-color:" + carreau.getCouleur().getColorValue() + ";");
+                plateau.setCarreauSelectionne(null);
+            }
+        }
     }
 
 }

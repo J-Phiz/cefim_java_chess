@@ -22,6 +22,10 @@ public abstract class Piece implements Cloneable {
         return image;
     }
 
+    public CouleurPiece getCouleur() {
+        return couleur;
+    }
+
     public abstract ArrayList<Deplacement> deplacementsPossibles(Plateau plateau);
 
     @Override

@@ -21,6 +21,10 @@ public class Partie {
         return INSTANCE;
     }
 
+    public int getNbTours() {
+        return nbTours;
+    }
+
     public void nouvellePartie() {
         // appelle plateau.initialiserPlateau()
     }
