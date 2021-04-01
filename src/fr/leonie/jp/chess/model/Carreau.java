@@ -7,6 +7,7 @@ public class Carreau {
     private final CouleurCarreau couleur;
     private Piece contenu;
     private boolean selectionnee;
+    private boolean destination;
     private final int colonne;
     private final int ligne;
 
@@ -38,6 +39,14 @@ public class Carreau {
 
     public void setSelectionnee(boolean selectionnee) {
         this.selectionnee = selectionnee;
+    }
+
+    public boolean isDestination() {
+        return destination;
+    }
+
+    public void setDestination(boolean destination) {
+        this.destination = destination;
     }
 
     public CouleurCarreau getCouleur() {

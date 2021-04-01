@@ -15,8 +15,18 @@ public class Pion extends Piece {
     }
 
     @Override
-    public ArrayList<Deplacement> deplacementsPossibles(Plateau plateau) {
-        return null;
+    public ArrayList<Deplacement> deplacementsPossibles(Plateau plateau, Carreau carreau) {
+
+        ArrayList<Deplacement> deplacements = new ArrayList<>();
+
+        Deplacement deplacement = new Deplacement(
+                this,
+                carreau,
+                plateau.getCarreaux()[carreau.getColonne()][carreau.getLigne()+1]
+        );
+        deplacements.add(deplacement);
+
+        return deplacements;
     }
 
 }

@@ -16,7 +16,7 @@ public class Tour extends Piece {
     }
 
     @Override
-    public ArrayList<Deplacement> deplacementsPossibles(Plateau plateau) {
+    public ArrayList<Deplacement> deplacementsPossibles(Plateau plateau, Carreau carreau) {
         return null;
     }
 

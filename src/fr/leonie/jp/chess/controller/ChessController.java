@@ -14,6 +14,7 @@ import javafx.scene.paint.Paint;
 
 import java.lang.reflect.Field;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class ChessController implements Initializable {
@@ -65,6 +66,8 @@ public class ChessController implements Initializable {
 
                     if (carreau.isSelectionnee()) {
                         pane.setStyle("-fx-background-color:RED;");
+                    } else if (carreau.isDestination()) {
+                        pane.setStyle("-fx-background-color:GREEN;");
                     } else {
                         pane.setStyle("-fx-background-color:" + carreau.getCouleur().getColorValue() + ";");
                     }
@@ -113,6 +116,8 @@ public class ChessController implements Initializable {
         CouleurPiece tourCouleur = partie.getNbTours() % 2 == 0 ? CouleurPiece.BLANC : CouleurPiece.NOIR;
         Carreau ancienCarreau = plateau.getCarreauSelectionne();
 
+        hideAllowMoves();
+
         if(carreau.getContenu() != null && carreau.getContenu().getCouleur() == tourCouleur) {
             carreau.setSelectionnee(!carreau.isSelectionnee());
             if(carreau.isSelectionnee()) {
@@ -120,6 +125,7 @@ public class ChessController implements Initializable {
                     ancienCarreau.setSelectionnee(false);
                 }
                 plateau.setCarreauSelectionne(carreau);
+                showAllowMoves(carreau.getContenu().deplacementsPossibles(plateau, carreau));
             } else {
                 plateau.setCarreauSelectionne(null);
             }
@@ -132,6 +138,18 @@ public class ChessController implements Initializable {
         }
 
         updateUI();
+    }
+
+    private void hideAllowMoves() {
+        for(int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                plateau.getCarreaux()[i][j].setDestination(false);
+            }
+        }
+    }
+
+    private void showAllowMoves(ArrayList<Deplacement> deplacements) {
+        deplacements.forEach(deplacement -> deplacement.getCarreauFin().setDestination(true));
     }
 
     private void cancelButtonInit() {

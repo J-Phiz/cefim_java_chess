@@ -26,7 +26,7 @@ public abstract class Piece implements Cloneable {
         return couleur;
     }
 
-    public abstract ArrayList<Deplacement> deplacementsPossibles(Plateau plateau);
+    public abstract ArrayList<Deplacement> deplacementsPossibles(Plateau plateau, Carreau carreau);
 
     @Override
     public Object clone() {

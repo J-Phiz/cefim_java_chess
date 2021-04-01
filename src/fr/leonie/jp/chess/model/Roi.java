@@ -15,7 +15,7 @@ public class Roi extends Piece {
     }
 
     @Override
-    public ArrayList<Deplacement> deplacementsPossibles(Plateau plateau) {
+    public ArrayList<Deplacement> deplacementsPossibles(Plateau plateau, Carreau carreau) {
         return null;
     }
 
