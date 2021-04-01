@@ -153,7 +153,9 @@ public class ChessController implements Initializable {
     }
 
     private void showAllowMoves(ArrayList<Deplacement> deplacements) {
-        deplacements.forEach(deplacement -> deplacement.getCarreauFin().setDestination(true));
+        if (deplacements != null) {
+            deplacements.forEach(deplacement -> deplacement.getCarreauFin().setDestination(true));
+        }
     }
 
     private void cancelButtonInit() {
