@@ -28,16 +28,24 @@ public abstract class Piece implements Cloneable {
 
     public abstract ArrayList<Deplacement> deplacementsPossibles(Plateau plateau, Carreau carreau);
 
-    protected Carreau checkMove(int colonne, int ligne) {
+    protected Deplacement checkMove(Carreau carreau, int deltaColonne, int deltaLigne) {
         Carreau[][] carreaux = Plateau.getInstance().getCarreaux();
+        int indexColonneArrivee = carreau.getColonne() + deltaColonne;
+        int indexLigneArrivee = carreau.getLigne() + deltaLigne;
 
-        Carreau carreau = null;
-        if ((ligne >= 0 && ligne <= 7 && colonne >= 0 && colonne <= 7) &&
-                (carreaux[colonne][ligne].getContenu() == null ||
-                        carreaux[colonne][ligne].getContenu().getCouleur() != couleur)) {
-            carreau = carreaux[colonne][ligne];
+        Deplacement deplacement = null;
+        if ((indexColonneArrivee >= 0 && indexColonneArrivee <= 7 && indexLigneArrivee >= 0 && indexLigneArrivee <= 7) &&
+                (carreaux[indexColonneArrivee][indexLigneArrivee].getContenu() == null ||
+                        carreaux[indexColonneArrivee][indexLigneArrivee].getContenu().getCouleur() != couleur)) {
+            Carreau destination = carreaux[indexColonneArrivee][indexLigneArrivee];
+            deplacement = new Deplacement(
+                    this,
+                    carreau,
+                    destination,
+                    destination.getContenu()
+            );
         }
-        return carreau;
+        return deplacement;
     }
 
     @Override
