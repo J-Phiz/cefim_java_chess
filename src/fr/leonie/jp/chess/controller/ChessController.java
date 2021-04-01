@@ -67,7 +67,11 @@ public class ChessController implements Initializable {
                     if (carreau.isSelectionnee()) {
                         pane.setStyle("-fx-background-color:RED;");
                     } else if (carreau.isDestination()) {
-                        pane.setStyle("-fx-background-color:GREEN;");
+                        if(carreau.getContenu() == null) {
+                            pane.setStyle("-fx-background-color:GREEN;");
+                        } else {
+                            pane.setStyle("-fx-background-color:BLUE;");
+                        }
                     } else {
                         pane.setStyle("-fx-background-color:" + carreau.getCouleur().getColorValue() + ";");
                     }
