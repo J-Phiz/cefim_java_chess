@@ -6,6 +6,7 @@ import fr.leonie.jp.chess.model.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -45,6 +46,15 @@ public class ChessController implements Initializable {
     @FXML
     private Button buttonCancel;
 
+    @FXML
+    private Button buttonNew;
+
+    @FXML
+    private Button buttonQuit;
+
+    @FXML
+    private Label labelDescription;
+
     private final Partie partie = Partie.getInstance();
     private final Plateau plateau = Plateau.getInstance();
 
@@ -52,6 +62,7 @@ public class ChessController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         clickablePanes();
         cancelButtonInit();
+        newButtonInit();
         partie.nouvellePartie();
         updateUI();
     }
@@ -96,6 +107,9 @@ public class ChessController implements Initializable {
 
         // activation/desactivation bouton
         buttonCancel.setDisable(partie.getNbTours() == 0);
+
+        // affichage informations jeu
+        labelDescription.setText("Tour n°" + partie.getNbTours() + " - " + (partie.getNbTours() % 2 == 0 ? "blancs" : "noirs"));
     }
 
     private void clickablePanes() {
@@ -161,6 +175,13 @@ public class ChessController implements Initializable {
     private void cancelButtonInit() {
         buttonCancel.setOnMouseClicked(mouseEvent -> {
             partie.annulerDeplacement();
+            updateUI();
+        });
+    }
+
+    private void newButtonInit() {
+        buttonNew.setOnMouseClicked(mouseEvent -> {
+            partie.nouvellePartie();
             updateUI();
         });
     }
