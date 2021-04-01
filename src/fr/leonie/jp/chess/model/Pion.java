@@ -19,15 +19,49 @@ public class Pion extends Piece {
 
         ArrayList<Deplacement> deplacements = new ArrayList<>();
 
-        Deplacement deplacement = new Deplacement(
-                this,
-                carreau,
-                plateau.getCarreaux()[carreau.getColonne()][carreau.getLigne()+1],
-                plateau.getCarreaux()[carreau.getColonne()][carreau.getLigne()+1].getContenu()
-        );
-        deplacements.add(deplacement);
+        int colonne = carreau.getColonne();
+        int ligne = carreau.getLigne();
+
+        // Check une case devant
+        ligne += this.couleur == CouleurPiece.BLANC ? -1 : 1;
+
+        if(checkMove(plateau.getCarreaux(), colonne, ligne)) {
+            deplacements.add(new Deplacement(
+                    this,
+                    carreau,
+                    plateau.getCarreaux()[colonne][ligne],
+                    plateau.getCarreaux()[colonne][ligne].getContenu()
+            ));
+        }
+
+        //Check 2 cases devant si à la position inititale
+        if ((carreau.getLigne() == 6 && this.couleur == CouleurPiece.BLANC) ||
+                (carreau.getLigne() == 1 && this.couleur == CouleurPiece.NOIR)) {
+
+            ligne += this.couleur == CouleurPiece.BLANC ? -1 : 1;
+
+            if(checkMove(plateau.getCarreaux(), colonne, ligne)) {
+                deplacements.add(new Deplacement(
+                        this,
+                        carreau,
+                        plateau.getCarreaux()[colonne][ligne],
+                        plateau.getCarreaux()[colonne][ligne].getContenu()
+                ));
+            }
+        }
 
         return deplacements;
+    }
+
+    private boolean checkMove(Carreau[][] carreaux, int colonne, int ligne) {
+
+        if (ligne < 0 || ligne > 7 || colonne < 0 || colonne > 7) {
+            return false;
+        }
+
+        return carreaux[colonne][ligne].getContenu() == null ||
+                carreaux[colonne][ligne].getContenu().getCouleur() != couleur;
+
     }
 
 }
