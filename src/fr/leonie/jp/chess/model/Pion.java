@@ -21,11 +21,13 @@ public class Pion extends Piece {
 
         int colonne = carreau.getColonne();
         int ligne = carreau.getLigne();
+        Carreau newCarreau;
 
         // Check une case devant
         ligne += this.couleur == CouleurPiece.BLANC ? -1 : 1;
 
-        if(checkMove(plateau.getCarreaux(), colonne, ligne)) {
+        newCarreau = checkMove(plateau.getCarreaux(), colonne, ligne);
+        if(newCarreau != null) {
             deplacements.add(new Deplacement(
                     this,
                     carreau,
@@ -40,7 +42,8 @@ public class Pion extends Piece {
 
             ligne += this.couleur == CouleurPiece.BLANC ? -1 : 1;
 
-            if(checkMove(plateau.getCarreaux(), colonne, ligne)) {
+            newCarreau = checkMove(plateau.getCarreaux(), colonne, ligne);
+            if(newCarreau != null) {
                 deplacements.add(new Deplacement(
                         this,
                         carreau,
@@ -51,17 +54,6 @@ public class Pion extends Piece {
         }
 
         return deplacements;
-    }
-
-    private boolean checkMove(Carreau[][] carreaux, int colonne, int ligne) {
-
-        if (ligne < 0 || ligne > 7 || colonne < 0 || colonne > 7) {
-            return false;
-        }
-
-        return carreaux[colonne][ligne].getContenu() == null ||
-                carreaux[colonne][ligne].getContenu().getCouleur() != couleur;
-
     }
 
 }
