@@ -76,12 +76,12 @@ public class ChessController implements Initializable {
                     Pane pane = (Pane) field.get(this);
 
                     if (carreau.isSelectionnee()) {
-                        pane.setStyle("-fx-background-color:RED;");
+                        pane.setStyle("-fx-background-color:#A36F85;");
                     } else if (carreau.isDestination()) {
                         if(carreau.getContenu() == null) {
-                            pane.setStyle("-fx-background-color:GREEN;");
+                            pane.setStyle("-fx-background-color:#F0EDD3;");
                         } else {
-                            pane.setStyle("-fx-background-color:BLUE;");
+                            pane.setStyle("-fx-background-color:#779CA3;");
                         }
                     } else {
                         pane.setStyle("-fx-background-color:" + carreau.getCouleur().getColorValue() + ";");

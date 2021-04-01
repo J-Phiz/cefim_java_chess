@@ -49,6 +49,22 @@ public class Plateau {
     }
 
     public void initialiserPlateau() {
+        // clean avant de regénérer
+        for(int i = 0; i < piecesNoires.size(); i++) {
+            piecesNoires.remove(i);
+        }
+        for(int i = 0; i < piecesBlanches.size(); i++) {
+            piecesBlanches.remove(i);
+        }
+        for(int i = 0; i < 8; i++) {
+            for(int j = 0; j < 8; j++) {
+                carreaux[i][j].setContenu(null);
+                carreaux[i][j].setSelectionnee(false);
+                carreaux[i][j].setDestination(false);
+            }
+        }
+
+        // création et placement des pièces
         creationAutresPieces(piecesNoires, CouleurPiece.NOIR, 0);
         creationPions(piecesNoires, CouleurPiece.NOIR, 1);
         creationPions(piecesBlanches, CouleurPiece.BLANC, 6);

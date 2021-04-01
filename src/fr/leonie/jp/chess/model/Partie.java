@@ -26,6 +26,10 @@ public class Partie {
     }
 
     public void nouvellePartie() {
+        nbTours = 0;
+        for(int i = 0; i < deplacements.size(); i++) {
+            deplacements.remove(i);
+        }
         plateau.initialiserPlateau();
     }
 

@@ -1,7 +1,7 @@
 package fr.leonie.jp.chess.enumeration;
 
 public enum CouleurCarreau {
-    BLANC("WHITE"), ROSE("PINK");
+    BLANC("#FFFFFF"), ROSE("#F0BBD1");
 
     String colorValue;
     CouleurCarreau(String colorValue) {
