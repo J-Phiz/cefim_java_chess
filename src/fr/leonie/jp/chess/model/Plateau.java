@@ -69,12 +69,19 @@ public class Plateau {
 
     /**
      * Cette méthode met à jour la case sélectionnée par le joueur
-     * @param carreauSelectionne l'adresse de l'objet Carreau à sélectionner
+     * @param carreauSelectionne l'objet Carreau à sélectionner ou null si aucune case n'est à sélectionner
      */
     public void setCarreauSelectionne(Carreau carreauSelectionne) {
         this.carreauSelectionne = carreauSelectionne;
     }
 
+    /**
+     * Cette méthode place les pièces sur le plateau pour démarrer une nouvelle partie <ul>
+     *     <li>Supprimer les pièces des cases d'une partie précédente</li>
+     *     <li>Déseléctionner toutes les cases</li>
+     *     <li>Placement des pièces pour la nouvelle partie</li>
+     * </ul>
+     */
     public void initialiserPlateau() {
         // clean avant de regénérer
         for(int i = 0; i < piecesNoires.size(); i++) {
