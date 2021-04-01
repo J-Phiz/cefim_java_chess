@@ -76,15 +76,15 @@ public class ChessController implements Initializable {
                     Pane pane = (Pane) field.get(this);
 
                     if (carreau.isSelectionnee()) {
-                        pane.setStyle("-fx-background-color:#A36F85;");
+                        pane.setStyle("-fx-background-color:#A36F85; -fx-border-color:#A36F85;");
                     } else if (carreau.isDestination()) {
                         if(carreau.getContenu() == null) {
-                            pane.setStyle("-fx-background-color:#F0EDD3;");
+                            pane.setStyle("-fx-background-color:#F0EDD3; -fx-border-color:#779CA3;");
                         } else {
-                            pane.setStyle("-fx-background-color:#779CA3;");
+                            pane.setStyle("-fx-background-color:#779CA3; -fx-border-color:#779CA3;");
                         }
                     } else {
-                        pane.setStyle("-fx-background-color:" + carreau.getCouleur().getColorValue() + ";");
+                        pane.setStyle("-fx-background-color:" + carreau.getCouleur().getColorValue() + "; -fx-border-color:" + carreau.getCouleur().getColorValue() + ";");
                     }
                     if (carreau.getContenu() != null) {
                         pane.getChildren().setAll(new ImageView(new Image(
