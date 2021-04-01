@@ -25,7 +25,7 @@ public class Roi extends Piece {
                 if(indexColonneDepart + i >= 0 && indexColonneDepart + i < 8 && indexLigneDepart + j >= 0 && indexLigneDepart + j < 8) {
                     Carreau destination = plateau.getCarreaux()[indexColonneDepart + i][indexLigneDepart + j];
 
-                    if(destination.getContenu().getCouleur() != this.getCouleur()) {
+                    if(destination.getContenu() == null || destination.getContenu().getCouleur() != this.getCouleur()) {
                         Deplacement deplacement = new Deplacement(
                                 this,
                                 carreau,
