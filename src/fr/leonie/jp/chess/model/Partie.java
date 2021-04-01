@@ -30,7 +30,6 @@ public class Partie {
     }
 
     public void nouveauDeplacement(Deplacement deplacement) {
-        //TODO: Supprimer la piece si presente sur le carreau de fin
         deplacement.getCareauDepart().setContenu(null);
         deplacement.getCarreauFin().setContenu(deplacement.getPiece());
 

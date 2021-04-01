@@ -22,7 +22,8 @@ public class Pion extends Piece {
         Deplacement deplacement = new Deplacement(
                 this,
                 carreau,
-                plateau.getCarreaux()[carreau.getColonne()][carreau.getLigne()+1]
+                plateau.getCarreaux()[carreau.getColonne()][carreau.getLigne()+1],
+                plateau.getCarreaux()[carreau.getColonne()][carreau.getLigne()+1].getContenu()
         );
         deplacements.add(deplacement);
 

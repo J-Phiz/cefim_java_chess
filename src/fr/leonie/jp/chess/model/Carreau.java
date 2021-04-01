@@ -11,7 +11,7 @@ public class Carreau {
     private final int colonne;
     private final int ligne;
 
-    public Carreau(CouleurCarreau couleur, int ligne, int colonne) {
+    public Carreau(CouleurCarreau couleur, int colonne, int ligne) {
         this.couleur = couleur;
         contenu = null;
         selectionnee = false;
