@@ -77,7 +77,7 @@ public class ChessController implements Initializable {
                                 true
                         )));
                     } else {
-                        pane.getChildren().removeAll();
+                        pane.getChildren().clear();
                     }
                 } catch(Exception exception) {
                     System.out.println(
