@@ -100,6 +100,14 @@ public class Plateau {
 
     }
 
+    /**
+     * Cette méthode crée les pièces de type Pion,
+     * les place sur le plateau,
+     * les ajoute à la liste des pièces du jeu
+     * @param pieces la liste des pièces à alimenter
+     * @param couleur la couleur de la pièce à créer
+     * @param ligne la ligne sur laquelle sera placée la pièce
+     */
     private void creationPions(ArrayList<Piece> pieces, CouleurPiece couleur, int ligne) {
         Piece piece;
 
@@ -110,6 +118,14 @@ public class Plateau {
         }
     }
 
+    /**
+     * Cette méthode crée les pièces de type Roi, Reine, Fou, Cavalier et Tour,
+     * les place sur le plateau (dans la bonne case de départ),
+     * les ajoute à la liste des pièces du jeu
+     * @param pieces la liste des pièces à alimenter
+     * @param couleur la couleur de la pièce à créer
+     * @param ligne la ligne sur laquelle sera placée la pièce
+     */
     private void creationAutresPieces(ArrayList<Piece> pieces, CouleurPiece couleur, int ligne) {
         Piece piece = null;
 
