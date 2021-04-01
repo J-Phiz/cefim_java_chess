@@ -63,6 +63,7 @@ public class Plateau {
                 carreaux[i][j].setDestination(false);
             }
         }
+        carreauSelectionne = null;
 
         // création et placement des pièces
         creationAutresPieces(piecesNoires, CouleurPiece.NOIR, 0);
