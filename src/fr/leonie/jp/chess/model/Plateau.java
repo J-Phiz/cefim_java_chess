@@ -6,6 +6,11 @@ import fr.leonie.jp.chess.enumeration.TypePiece;
 
 import java.util.ArrayList;
 
+/**
+ * Classe Singleton qui gère un plateau de jeu d'échecs
+ *
+ * @Author Léonie Dusart et Jean-Philippe Save
+ */
 public class Plateau {
 
     private final Carreau[][] carreaux = new Carreau[8][8];
@@ -15,6 +20,12 @@ public class Plateau {
 
     private static final Plateau INSTANCE = new Plateau();
 
+    /**
+     * Constructeur : <ul>
+     *     <li>Initialise les 64 cases du plateau avec une couleur de fond</li>
+     *     <li>Initialise les pièces</li>
+     * </ul>
+     */
     private Plateau() {
         CouleurCarreau couleur;
         for(int i = 0; i < 8; i++) {
@@ -31,19 +42,35 @@ public class Plateau {
         piecesNoires = new ArrayList<Piece>();
     }
 
+    /**
+     * Cette méthode récupère l'instance de cette classe Singleton
+     * @return l'instance du Plateau
+     */
     public static Plateau getInstance() {
         return INSTANCE;
     }
 
+    /**
+     * Cette méthode récupère la liste des cases du plateau ordonnée en lignes et colonnes
+     * @return tableau de à 2 dimensions [colonne][ligne] d'Objets Carreau
+     */
     public Carreau[][] getCarreaux() {
         return carreaux;
     }
 
+    /**
+     * Cette méthode récupère la case actuellement sélectionnée par le joueur
+     * @return l'objet Carreau correspondant à la case sélectionnée ou null si aucune case n'est sélectionnée
+     */
     public Carreau getCarreauSelectionne() {
         // on renvoi l'instance susceptible d'être modifiée
         return carreauSelectionne;
     }
 
+    /**
+     * Cette méthode met à jour la case sélectionnée par le joueur
+     * @param carreauSelectionne l'adresse de l'objet Carreau à sélectionner
+     */
     public void setCarreauSelectionne(Carreau carreauSelectionne) {
         this.carreauSelectionne = carreauSelectionne;
     }
