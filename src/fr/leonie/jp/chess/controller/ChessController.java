@@ -109,7 +109,7 @@ public class ChessController implements Initializable {
         buttonCancel.setDisable(partie.getNbTours() == 0);
 
         // affichage informations jeu
-        labelDescription.setText("Tour n°" + partie.getNbTours() + " - " + (partie.getNbTours() % 2 == 0 ? "blancs" : "noirs"));
+        labelDescription.setText("Tour n°" + (partie.getNbTours()+1) + " - " + (partie.getNbTours() % 2 == 0 ? "blancs" : "noirs"));
 
         // quitter en cliquant sur le bouton Quitter
         buttonQuit.setOnMouseClicked(mouseEvent -> System.exit(0));
