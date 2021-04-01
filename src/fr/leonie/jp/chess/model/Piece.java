@@ -1,8 +1,6 @@
 package fr.leonie.jp.chess.model;
 
 import fr.leonie.jp.chess.enumeration.CouleurPiece;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
 
@@ -12,15 +10,15 @@ public abstract class Piece implements Cloneable {
 
     protected final String nom;
     protected final CouleurPiece couleur;
-    protected final ImageView image;
+    protected final String image;
 
     public Piece(String nom, CouleurPiece couleur, String image) {
         this.nom = nom;
         this.couleur = couleur;
-        this.image = new ImageView(new Image("file:" + image, 100, 100, false, true));
+        this.image = image;
     }
 
-    public ImageView getImage() {
+    public String getImage() {
         return image;
     }
 

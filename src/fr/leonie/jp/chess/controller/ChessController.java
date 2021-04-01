@@ -69,7 +69,13 @@ public class ChessController implements Initializable {
                         pane.setStyle("-fx-background-color:" + carreau.getCouleur().getColorValue() + ";");
                     }
                     if (carreau.getContenu() != null) {
-                        pane.getChildren().setAll(carreau.getContenu().getImage());
+                        pane.getChildren().setAll(new ImageView(new Image(
+                                "file:" + carreau.getContenu().getImage(),
+                                100,
+                                100,
+                                false,
+                                true
+                        )));
                     } else {
                         pane.getChildren().removeAll();
                     }
