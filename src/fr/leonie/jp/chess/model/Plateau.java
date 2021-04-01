@@ -115,8 +115,4 @@ public class Plateau {
         }
     }
 
-    public ArrayList<Carreau> deplacementsPossibles(Carreau carreau) {
-        return null;
-    }
-
 }
