@@ -3,6 +3,8 @@ package fr.leonie.jp.chess.model;
 import fr.leonie.jp.chess.enumeration.CouleurPiece;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class Piece implements Cloneable {
 
@@ -18,6 +20,10 @@ public abstract class Piece implements Cloneable {
         this.image = image;
     }
 
+    public String getNom() {
+        return nom;
+    }
+
     public String getImage() {
         return image;
     }
@@ -26,7 +32,7 @@ public abstract class Piece implements Cloneable {
         return couleur;
     }
 
-    public abstract ArrayList<Deplacement> deplacementsPossibles(Plateau plateau, Carreau carreau);
+    public abstract ArrayList<Deplacement> deplacementsPossibles(Carreau carreau);
 
     protected Deplacement checkMove(Carreau carreau, int deltaColonne, int deltaLigne) {
         Carreau[][] carreaux = Plateau.getInstance().getCarreaux();
@@ -46,6 +52,11 @@ public abstract class Piece implements Cloneable {
             );
         }
         return deplacement;
+    }
+
+    public ArrayList<Deplacement> isKindThreaten(Carreau carreau) {
+        ArrayList<Deplacement> deplacements = deplacementsPossibles(carreau);
+        return (ArrayList<Deplacement>) deplacements.stream().filter(d -> d.getPieceMangee() != null && d.getPieceMangee().getNom().equals("roi") && d.getPieceMangee().getCouleur() != d.getPiece().getCouleur()).collect(Collectors.toList());
     }
 
     @Override

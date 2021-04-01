@@ -1,5 +1,7 @@
 package fr.leonie.jp.chess.model;
 
+import fr.leonie.jp.chess.enumeration.CouleurPiece;
+
 import java.util.ArrayList;
 
 public class Partie {
@@ -7,6 +9,8 @@ public class Partie {
     private final Plateau plateau;
     private final ArrayList<Deplacement> deplacements;
     private int nbTours;
+    private boolean roiNoirMenace = false;
+    private boolean roiBlancMenace = false;
 
     private static final Partie INSTANCE = new Partie();
 
@@ -25,6 +29,14 @@ public class Partie {
         return nbTours;
     }
 
+    public boolean isRoiNoirMenace() {
+        return roiNoirMenace;
+    }
+
+    public boolean isRoiBlancMenace() {
+        return roiBlancMenace;
+    }
+
     public void nouvellePartie() {
         nbTours = 0;
         for(int i = 0; i < deplacements.size(); i++) {
@@ -40,6 +52,17 @@ public class Partie {
         deplacements.add(deplacement);
 
         nbTours++;
+
+        ArrayList<Deplacement> deplacementsMenancantRois = new ArrayList<>();
+        for(int i = 0; i < 8; i++) {
+            for(int j = 0; j < 8; j++) {
+                if(plateau.getCarreaux()[i][j].getContenu() != null) {
+                    deplacementsMenancantRois.addAll(plateau.getCarreaux()[i][j].getContenu().isKindThreaten(plateau.getCarreaux()[i][j]));
+                }
+            }
+        }
+        roiBlancMenace = deplacementsMenancantRois.stream().anyMatch(d -> d.getPieceMangee().getCouleur() == CouleurPiece.BLANC);
+        roiNoirMenace = deplacementsMenancantRois.stream().anyMatch(d -> d.getPieceMangee().getCouleur() == CouleurPiece.NOIR);
     }
 
     public void annulerDeplacement() {

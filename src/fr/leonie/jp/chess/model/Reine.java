@@ -15,7 +15,7 @@ public class Reine extends Piece {
     }
 
     @Override
-    public ArrayList<Deplacement> deplacementsPossibles(Plateau plateau, Carreau carreau) {
+    public ArrayList<Deplacement> deplacementsPossibles(Carreau carreau) {
         ArrayList<Deplacement> deplacements = new ArrayList<>();
 
         // déplacement vers la droite

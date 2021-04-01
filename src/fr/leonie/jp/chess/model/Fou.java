@@ -15,7 +15,7 @@ public class Fou extends Piece {
     }
 
     @Override
-    public ArrayList<Deplacement> deplacementsPossibles(Plateau plateau, Carreau carreau) {
+    public ArrayList<Deplacement> deplacementsPossibles(Carreau carreau) {
         ArrayList<Deplacement> deplacements = new ArrayList<>();
 
         // déplacement diagonale haut/droit

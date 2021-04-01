@@ -55,6 +55,12 @@ public class ChessController implements Initializable {
     @FXML
     private Label labelDescription;
 
+    @FXML
+    private Label labelCheckWhite;
+
+    @FXML
+    private Label labelCheckBlack;
+
     private final Partie partie = Partie.getInstance();
     private final Plateau plateau = Plateau.getInstance();
 
@@ -111,6 +117,10 @@ public class ChessController implements Initializable {
         // affichage informations jeu
         labelDescription.setText("Tour n°" + (partie.getNbTours()+1) + " - " + (partie.getNbTours() % 2 == 0 ? "blancs" : "noirs"));
 
+        // affichage information échec au roi
+        labelCheckWhite.setText(partie.isRoiBlancMenace() ? "Echec au roi Blanc !" : "");
+        labelCheckBlack.setText(partie.isRoiNoirMenace() ? "Echec au roi Noir !" : "");
+
         // quitter en cliquant sur le bouton Quitter
         buttonQuit.setOnMouseClicked(mouseEvent -> System.exit(0));
     }
@@ -145,7 +155,7 @@ public class ChessController implements Initializable {
                     ancienCarreau.setSelectionnee(false);
                 }
                 plateau.setCarreauSelectionne(carreau);
-                showAllowMoves(carreau.getContenu().deplacementsPossibles(plateau, carreau));
+                showAllowMoves(carreau.getContenu().deplacementsPossibles(carreau));
             } else {
                 plateau.setCarreauSelectionne(null);
             }

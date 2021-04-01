@@ -15,7 +15,7 @@ public class Cavalier extends Piece {
     }
 
     @Override
-    public ArrayList<Deplacement> deplacementsPossibles(Plateau plateau, Carreau carreau) {
+    public ArrayList<Deplacement> deplacementsPossibles(Carreau carreau) {
         ArrayList<Deplacement> deplacements = new ArrayList<>();
 
         int[][] targets = {{-2, -1}, {-2, 1}, {-1, -2}, {-1, 2}, {1, -2}, {1, 2}, {2, -1}, {2, 1}};

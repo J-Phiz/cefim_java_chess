@@ -15,8 +15,7 @@ public class Pion extends Piece {
     }
 
     @Override
-    public ArrayList<Deplacement> deplacementsPossibles(Plateau plateau, Carreau carreau) {
-
+    public ArrayList<Deplacement> deplacementsPossibles(Carreau carreau) {
         ArrayList<Deplacement> deplacements = new ArrayList<>();
         Deplacement deplacement;
 
