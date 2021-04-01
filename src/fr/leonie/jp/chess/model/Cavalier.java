@@ -20,21 +20,18 @@ public class Cavalier extends Piece {
         int indexColonneDepart = carreau.getColonne();
         int indexLigneDepart = carreau.getLigne();
 
-        int[][] targets = {{-2, -1}, {-2, 1}, {-1, -2}, {-1, 2}, {1, -2}, {1, 2}, {2, -1}, {2, -1}};
+        int[][] targets = {{-2, -1}, {-2, 1}, {-1, -2}, {-1, 2}, {1, -2}, {1, 2}, {2, -1}, {2, 1}};
 
         for(int i = 0; i < targets.length; i++) {
-            if(indexColonneDepart + targets[i][0] >= 0 && indexColonneDepart + targets[i][0] < 8 && indexLigneDepart + targets[i][1] >= 0 && indexLigneDepart + targets[i][1] < 8) {
-                Carreau destination = plateau.getCarreaux()[indexColonneDepart + targets[i][0]][indexLigneDepart + targets[i][1]];
-
-                if(destination.getContenu() == null || destination.getContenu().getCouleur() != this.getCouleur()) {
-                    Deplacement deplacement = new Deplacement(
-                            this,
-                            carreau,
-                            destination,
-                            destination.getContenu()
-                    );
-                    deplacements.add(deplacement);
-                }
+            Carreau destination = this.checkMove(indexColonneDepart + targets[i][0], indexLigneDepart + targets[i][1]);
+            if(destination != null) {
+                Deplacement deplacement = new Deplacement(
+                        this,
+                        carreau,
+                        destination,
+                        destination.getContenu()
+                );
+                deplacements.add(deplacement);
             }
         }
 

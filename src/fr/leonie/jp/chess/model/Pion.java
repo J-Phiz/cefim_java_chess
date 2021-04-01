@@ -26,7 +26,7 @@ public class Pion extends Piece {
         // Check une case devant
         ligne += this.couleur == CouleurPiece.BLANC ? -1 : 1;
 
-        newCarreau = checkMove(plateau.getCarreaux(), colonne, ligne);
+        newCarreau = checkMove(colonne, ligne);
         if(newCarreau != null) {
             deplacements.add(new Deplacement(
                     this,
@@ -42,7 +42,7 @@ public class Pion extends Piece {
 
             ligne += this.couleur == CouleurPiece.BLANC ? -1 : 1;
 
-            newCarreau = checkMove(plateau.getCarreaux(), colonne, ligne);
+            newCarreau = checkMove(colonne, ligne);
             if(newCarreau != null) {
                 deplacements.add(new Deplacement(
                         this,
