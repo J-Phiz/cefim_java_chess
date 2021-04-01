@@ -118,7 +118,7 @@ public class ChessController implements Initializable {
                 plateau.setCarreauSelectionne(null);
             }
         } else if(ancienCarreau != null) {
-            Deplacement deplacement = new Deplacement(ancienCarreau.getContenu(), ancienCarreau, carreau);
+            Deplacement deplacement = new Deplacement(ancienCarreau.getContenu(), ancienCarreau, carreau, carreau.getContenu());
             partie.nouveauDeplacement(deplacement);
 
             ancienCarreau.setSelectionnee(false);

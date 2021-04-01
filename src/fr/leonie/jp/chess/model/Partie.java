@@ -46,8 +46,7 @@ public class Partie {
             Deplacement deplacement = deplacements.get(indexDernierDeplacement);
 
             deplacement.getCareauDepart().setContenu(deplacement.getPiece());
-            //TODO: Remmettre la piece si presente sur le carreau de fin (où stocke t on cette info ??)
-            deplacement.getCarreauFin().setContenu(null);
+            deplacement.getCarreauFin().setContenu(deplacement.getPieceMangee());
 
             deplacements.remove(indexDernierDeplacement);
 
