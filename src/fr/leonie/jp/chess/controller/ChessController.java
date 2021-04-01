@@ -134,10 +134,9 @@ public class ChessController implements Initializable {
         CouleurPiece tourCouleur = partie.getNbTours() % 2 == 0 ? CouleurPiece.BLANC : CouleurPiece.NOIR;
         Carreau ancienCarreau = plateau.getCarreauSelectionne();
 
-        hideAllowMoves();
-
         if(carreau.getContenu() != null && carreau.getContenu().getCouleur() == tourCouleur) {
             carreau.setSelectionnee(!carreau.isSelectionnee());
+            hideAllowMoves();
             if(carreau.isSelectionnee()) {
                 if(ancienCarreau != null) {
                     ancienCarreau.setSelectionnee(false);
@@ -148,11 +147,13 @@ public class ChessController implements Initializable {
                 plateau.setCarreauSelectionne(null);
             }
         } else if(ancienCarreau != null) {
-            Deplacement deplacement = new Deplacement(ancienCarreau.getContenu(), ancienCarreau, carreau, carreau.getContenu());
-            partie.nouveauDeplacement(deplacement);
-
-            ancienCarreau.setSelectionnee(false);
-            plateau.setCarreauSelectionne(null);
+            if(carreau.isDestination()) {
+                Deplacement deplacement = new Deplacement(ancienCarreau.getContenu(), ancienCarreau, carreau, carreau.getContenu());
+                partie.nouveauDeplacement(deplacement);
+                ancienCarreau.setSelectionnee(false);
+                plateau.setCarreauSelectionne(null);
+                hideAllowMoves();
+            }
         }
 
         updateUI();
