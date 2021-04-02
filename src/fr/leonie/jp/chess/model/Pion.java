@@ -46,6 +46,20 @@ public class Pion extends Piece {
             deplacements.add(deplacement);
         }
 
+        // Check Passe en avant
+        if (
+                ((carreau.getLigne() == 3 && this.couleur == CouleurPiece.BLANC) ||
+                (carreau.getLigne() == 4) && this.couleur == CouleurPiece.NOIR)) {
+            deplacement = checkPasseAvant(carreau, -1, this.couleur == CouleurPiece.BLANC ? -1 : 1);
+            if(deplacement != null) {
+                deplacements.add(deplacement);
+            }
+            deplacement = checkPasseAvant(carreau, 1, this.couleur == CouleurPiece.BLANC ? -1 : 1);
+            if(deplacement != null) {
+                deplacements.add(deplacement);
+            }
+        }
+
         return deplacements;
     }
 
@@ -84,6 +98,36 @@ public class Pion extends Piece {
                     carreau,
                     destination,
                     destination.getContenu()
+            );
+        }
+        return deplacement;
+    }
+
+    protected Deplacement checkPasseAvant(Carreau carreau, int deltaColonne, int deltaLigne) {
+        Partie partie = Partie.getInstance();
+        Carreau[][] carreaux = Plateau.getInstance().getCarreaux();
+        int indexColonneArrivee = carreau.getColonne() + deltaColonne;
+        int indexLigneArrivee = carreau.getLigne() + deltaLigne;
+        int indexColonneMangee = carreau.getColonne() + deltaColonne;
+        int indexligneMangee = carreau.getLigne();
+        Carreau carreauFinPreviousDeplacement = partie.getLastDeplacement().getCarreauFin();
+
+        Deplacement deplacement = null;
+        if ((indexColonneArrivee >= 0 && indexColonneArrivee <= 7) &&
+                (indexLigneArrivee >= 0 && indexLigneArrivee <= 7) &&
+                (indexColonneMangee >= 0 && indexColonneMangee <= 7) &&
+                (indexligneMangee >= 0 && indexligneMangee <= 7) &&
+                (carreaux[indexColonneMangee][indexligneMangee].getContenu() != null) &&
+                (carreaux[indexColonneMangee][indexligneMangee].getContenu().getCouleur() != couleur) &&
+                (carreaux[indexColonneMangee][indexligneMangee].getContenu().getNom().equals("pion")) &&
+                (carreaux[indexColonneMangee][indexligneMangee] == carreauFinPreviousDeplacement)
+        ) {
+            Carreau destination = carreaux[indexColonneArrivee][indexLigneArrivee];
+            deplacement = new Deplacement(
+                    this,
+                    carreau,
+                    destination,
+                    null//carreaux[indexColonneMangee][indexligneMangee].getContenu()
             );
         }
         return deplacement;

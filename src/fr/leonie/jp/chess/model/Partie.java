@@ -175,6 +175,10 @@ public class Partie {
         deplacements.remove(deplacement);
     }
 
+    public Deplacement getLastDeplacement() {
+        return deplacements.get(deplacements.size() - 1);
+    }
+
     private void checkKingThreaten() {
         ArrayList<Deplacement> deplacementsMenancantRois = new ArrayList<>();
         for(int i = 0; i < 8; i++) {
