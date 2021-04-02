@@ -60,4 +60,16 @@ public class Carreau {
     public int getColonne() {
         return colonne;
     }
+
+    @Override
+    public String toString() {
+        return "Carreau{" +
+                "couleur=" + couleur +
+                ", contenu=" + contenu +
+                ", selectionnee=" + selectionnee +
+                ", destination=" + destination +
+                ", colonne=" + colonne +
+                ", ligne=" + ligne +
+                '}';
+    }
 }

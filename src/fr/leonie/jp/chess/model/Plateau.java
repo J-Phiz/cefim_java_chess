@@ -165,4 +165,25 @@ public class Plateau {
         }
     }
 
+    public ArrayList<Deplacement> deplacementsPossibles() {
+        Partie partie = Partie.getInstance();
+
+        ArrayList<Deplacement> deplacements = carreauSelectionne.getContenu().deplacementsPossibles(carreauSelectionne);
+        ArrayList<Deplacement> deplacementsToRemove = new ArrayList<>();
+
+        deplacements.forEach(deplacement -> {
+            partie.nouveauDeplacement(deplacement);
+            if ((deplacement.getPiece().getCouleur() == CouleurPiece.BLANC && partie.isRoiBlancMenace()) ||
+                    (deplacement.getPiece().getCouleur() == CouleurPiece.NOIR && partie.isRoiNoirMenace())
+            ) {
+                deplacementsToRemove.add(deplacement);
+            }
+            partie.annulerDeplacement();
+        });
+
+        deplacements.removeAll(deplacementsToRemove);
+
+        return deplacements;
+    }
+
 }

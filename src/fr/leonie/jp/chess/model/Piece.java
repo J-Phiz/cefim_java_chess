@@ -54,7 +54,7 @@ public abstract class Piece implements Cloneable {
         return deplacement;
     }
 
-    public ArrayList<Deplacement> isKindThreaten(Carreau carreau) {
+    public ArrayList<Deplacement> isKingThreaten(Carreau carreau) {
         ArrayList<Deplacement> deplacements = deplacementsPossibles(carreau);
         return (ArrayList<Deplacement>) deplacements.stream().filter(d -> d.getPieceMangee() != null && d.getPieceMangee().getNom().equals("roi") && d.getPieceMangee().getCouleur() != d.getPiece().getCouleur()).collect(Collectors.toList());
     }
