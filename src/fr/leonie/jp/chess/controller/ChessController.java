@@ -102,6 +102,7 @@ public class ChessController implements Initializable {
                                 false,
                                 true
                         ));
+                        pane.getChildren().setAll(imageView);
                         if (carreau.isSelectionnee()) {
                             RotateTransition rotation = new RotateTransition(
                                     Duration.seconds(1),
@@ -112,8 +113,20 @@ public class ChessController implements Initializable {
                             rotation.setCycleCount(10000);
                             rotation.setAutoReverse(true);
                             rotation.play();
+                        } else if (carreau.getContenu().getNom().equals("roi")) {
+                            if((carreau.getContenu().getCouleur() == CouleurPiece.BLANC && partie.isRoiBlancMenace()) ||
+                            carreau.getContenu().getCouleur() == CouleurPiece.NOIR && partie.isRoiNoirMenace()) {
+                                RotateTransition rotation = new RotateTransition(
+                                        Duration.millis(10),
+                                        imageView
+                                );
+                                rotation.setFromAngle(-10);
+                                rotation.setToAngle(10);
+                                rotation.setCycleCount(10000);
+                                rotation.setAutoReverse(true);
+                                rotation.play();
+                            }
                         }
-                        pane.getChildren().setAll(imageView);
                     } else {
                         pane.getChildren().removeAll();
                         pane.getChildren().clear();
