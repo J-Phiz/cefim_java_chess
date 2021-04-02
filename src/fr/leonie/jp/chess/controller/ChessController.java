@@ -190,7 +190,7 @@ public class ChessController implements Initializable {
                     ancienCarreau.setSelectionnee(false);
                 }
                 plateau.setCarreauSelectionne(carreau);
-                showAllowMoves(carreau.getContenu().deplacementsPossibles(carreau));
+                showAllowMoves(plateau.deplacementsPossibles());
             } else {
                 plateau.setCarreauSelectionne(null);
             }
