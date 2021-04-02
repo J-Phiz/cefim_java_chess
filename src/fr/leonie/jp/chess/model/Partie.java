@@ -53,16 +53,7 @@ public class Partie {
 
         nbTours++;
 
-        ArrayList<Deplacement> deplacementsMenancantRois = new ArrayList<>();
-        for(int i = 0; i < 8; i++) {
-            for(int j = 0; j < 8; j++) {
-                if(plateau.getCarreaux()[i][j].getContenu() != null) {
-                    deplacementsMenancantRois.addAll(plateau.getCarreaux()[i][j].getContenu().isKindThreaten(plateau.getCarreaux()[i][j]));
-                }
-            }
-        }
-        roiBlancMenace = deplacementsMenancantRois.stream().anyMatch(d -> d.getPieceMangee().getCouleur() == CouleurPiece.BLANC);
-        roiNoirMenace = deplacementsMenancantRois.stream().anyMatch(d -> d.getPieceMangee().getCouleur() == CouleurPiece.NOIR);
+        checkKingThreaten();
     }
 
     public void annulerDeplacement() {
@@ -77,7 +68,22 @@ public class Partie {
             deplacements.remove(indexDernierDeplacement);
 
             nbTours--;
+
+            checkKingThreaten();
         }
+    }
+
+    private void checkKingThreaten() {
+        ArrayList<Deplacement> deplacementsMenancantRois = new ArrayList<>();
+        for(int i = 0; i < 8; i++) {
+            for(int j = 0; j < 8; j++) {
+                if(plateau.getCarreaux()[i][j].getContenu() != null) {
+                    deplacementsMenancantRois.addAll(plateau.getCarreaux()[i][j].getContenu().isKingThreaten(plateau.getCarreaux()[i][j]));
+                }
+            }
+        }
+        roiBlancMenace = deplacementsMenancantRois.stream().anyMatch(d -> d.getPieceMangee().getCouleur() == CouleurPiece.BLANC);
+        roiNoirMenace = deplacementsMenancantRois.stream().anyMatch(d -> d.getPieceMangee().getCouleur() == CouleurPiece.NOIR);
     }
 
 }
