@@ -166,22 +166,29 @@ public class Plateau {
     }
 
     public ArrayList<Deplacement> deplacementsPossibles() {
+        return deplacementsPossibles(carreauSelectionne);
+    }
+
+    public ArrayList<Deplacement> deplacementsPossibles(Carreau carreau) {
         Partie partie = Partie.getInstance();
+        ArrayList<Deplacement> deplacements = new ArrayList<>();
 
-        ArrayList<Deplacement> deplacements = carreauSelectionne.getContenu().deplacementsPossibles(carreauSelectionne);
-        ArrayList<Deplacement> deplacementsToRemove = new ArrayList<>();
+        if(carreau.getContenu() != null) {
+            deplacements = carreau.getContenu().deplacementsPossibles(carreau);
+            ArrayList<Deplacement> deplacementsToRemove = new ArrayList<>();
 
-        deplacements.forEach(deplacement -> {
-            partie.nouveauDeplacement(deplacement);
-            if ((deplacement.getPiece().getCouleur() == CouleurPiece.BLANC && partie.isRoiBlancMenace()) ||
-                    (deplacement.getPiece().getCouleur() == CouleurPiece.NOIR && partie.isRoiNoirMenace())
-            ) {
-                deplacementsToRemove.add(deplacement);
-            }
-            partie.annulerDeplacement();
-        });
+            deplacements.forEach(deplacement -> {
+                partie.nouveauDeplacementSimul(deplacement);
+                if ((deplacement.getPiece().getCouleur() == CouleurPiece.BLANC && partie.isRoiBlancMenace()) ||
+                        (deplacement.getPiece().getCouleur() == CouleurPiece.NOIR && partie.isRoiNoirMenace())
+                ) {
+                    deplacementsToRemove.add(deplacement);
+                }
+                partie.annulerDeplacementSimul();
+            });
 
-        deplacements.removeAll(deplacementsToRemove);
+            deplacements.removeAll(deplacementsToRemove);
+        }
 
         return deplacements;
     }

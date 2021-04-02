@@ -159,7 +159,16 @@ public class ChessController implements Initializable {
         }
 
         // affichage popup
-        // TODO
+        if(partie.isRoiBlancMat() && partie.getNbTours() % 2 == 0) {
+            labelWinner.setText("Noir gagnant");
+            panePopup.setStyle("visibility: true; -fx-background-color: WHITE");
+        } else if (partie.isRoiNoirMat() && partie.getNbTours() % 2 == 1) {
+            labelWinner.setText("Blanc gagnant");
+            panePopup.setStyle("visibility: true; -fx-background-color: WHITE");
+        } else {
+            labelWinner.setText("");
+            panePopup.setStyle("visibility: false; -fx-background-color: WHITE");
+        }
 
         // activation/desactivation bouton
         buttonCancel.setDisable(partie.getNbTours() == 0);

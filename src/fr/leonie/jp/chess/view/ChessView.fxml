@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.leonie.jp.chess.controller.ChessController">
    <children>
       <GridPane alignment="center" hgap="0" vgap="0">
@@ -107,7 +106,7 @@
             <ColumnConstraints minWidth="100.0" prefWidth="200.0" />
          </columnConstraints>
       </GridPane>
-      <Pane fx:id="panePopup" prefHeight="200.0" prefWidth="200.0" style="visibility: false;" AnchorPane.bottomAnchor="300.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="300.0">
+      <Pane fx:id="panePopup" prefHeight="300.0" prefWidth="200.0" style="visibility: false;" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="100.0">
          <children>
             <Button fx:id="buttonNewPopup" layoutX="345.0" layoutY="145.0" mnemonicParsing="false" text="Nouvelle partie" />
             <Button fx:id="buttonQuitPopup" layoutX="457.0" layoutY="145.0" mnemonicParsing="false" text="Quitter" />
