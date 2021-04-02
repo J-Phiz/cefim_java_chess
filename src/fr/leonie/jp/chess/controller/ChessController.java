@@ -221,7 +221,14 @@ public class ChessController implements Initializable {
             }
         } else if(ancienCarreau != null) {
             if(carreau.isDestination()) {
-                Deplacement deplacement = new Deplacement(ancienCarreau.getContenu(), ancienCarreau, carreau, carreau.getContenu());
+
+                Deplacement deplacement = new Deplacement(
+                        ancienCarreau.getContenu(),
+                        ancienCarreau,
+                        carreau,
+                        carreau.getContenu(),
+                        checkPasseEnAvant(ancienCarreau, carreau)
+                );
                 deplacement.setRoque(carreau.isDestinationRoque());
                 partie.nouveauDeplacement(deplacement);
                 ancienCarreau.setSelectionnee(false);
@@ -231,6 +238,19 @@ public class ChessController implements Initializable {
         }
 
         updateUI();
+    }
+
+    private Carreau checkPasseEnAvant(Carreau debutCarreau, Carreau finCarreau) {
+        if(debutCarreau.getColonne() != finCarreau.getColonne() && debutCarreau.getContenu().getNom().equals("pion") && finCarreau.getContenu() == null) {
+            System.out.println("Je suis la debut=" + debutCarreau + " fin=" + finCarreau);
+            if(debutCarreau.getContenu().getCouleur() == CouleurPiece.BLANC) {
+                return plateau.getCarreaux()[finCarreau.getColonne()][finCarreau.getLigne() + 1];
+            } else {
+                return plateau.getCarreaux()[finCarreau.getColonne()][finCarreau.getLigne() - 1];
+            }
+        } else {
+            return finCarreau;
+        }
     }
 
     private void hideAllowMoves() {

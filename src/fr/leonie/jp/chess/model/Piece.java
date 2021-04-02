@@ -48,7 +48,8 @@ public abstract class Piece implements Cloneable {
                     this,
                     carreau,
                     destination,
-                    destination.getContenu()
+                    destination.getContenu(),
+                    destination
             );
         }
         return deplacement;

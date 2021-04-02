@@ -54,13 +54,13 @@ public class Partie {
         boolean condition4; // les cases entre sont vides
 
         if(nbTours % 2 == 0) {
-            condition1 = deplacements.stream().noneMatch(d -> (d.getCareauDepart().getLigne() == 7 && d.getCareauDepart().getColonne() == 4));
-            condition2 = deplacements.stream().noneMatch(d-> (d.getCareauDepart().getLigne() == 7 && d.getCareauDepart().getColonne() == 0));
+            condition1 = deplacements.stream().noneMatch(d -> (d.getCarreauDepart().getLigne() == 7 && d.getCarreauDepart().getColonne() == 4));
+            condition2 = deplacements.stream().noneMatch(d-> (d.getCarreauDepart().getLigne() == 7 && d.getCarreauDepart().getColonne() == 0));
             condition3 = !roiBlancMenace;
             condition4 = plateau.getCarreaux()[1][7].getContenu() == null && plateau.getCarreaux()[2][7].getContenu() == null && plateau.getCarreaux()[3][7].getContenu() == null;
         } else {
-            condition1 = deplacements.stream().noneMatch(d -> (d.getCareauDepart().getLigne() == 0 && d.getCareauDepart().getColonne() == 4));
-            condition2 = deplacements.stream().noneMatch(d-> (d.getCareauDepart().getLigne() == 0 && d.getCareauDepart().getColonne() == 0));
+            condition1 = deplacements.stream().noneMatch(d -> (d.getCarreauDepart().getLigne() == 0 && d.getCarreauDepart().getColonne() == 4));
+            condition2 = deplacements.stream().noneMatch(d-> (d.getCarreauDepart().getLigne() == 0 && d.getCarreauDepart().getColonne() == 0));
             condition3 = !roiNoirMenace;
             condition4 = plateau.getCarreaux()[1][0].getContenu() == null && plateau.getCarreaux()[2][0].getContenu() == null && plateau.getCarreaux()[3][0].getContenu() == null;
         }
@@ -75,13 +75,13 @@ public class Partie {
         boolean condition4; // les cases entre sont vides
 
         if(nbTours % 2 == 0) {
-            condition1 = deplacements.stream().noneMatch(d -> (d.getCareauDepart().getLigne() == 7 && d.getCareauDepart().getColonne() == 4));
-            condition2 = deplacements.stream().noneMatch(d-> (d.getCareauDepart().getLigne() == 7 && d.getCareauDepart().getColonne() == 7));
+            condition1 = deplacements.stream().noneMatch(d -> (d.getCarreauDepart().getLigne() == 7 && d.getCarreauDepart().getColonne() == 4));
+            condition2 = deplacements.stream().noneMatch(d-> (d.getCarreauDepart().getLigne() == 7 && d.getCarreauDepart().getColonne() == 7));
             condition3 = !roiBlancMenace;
             condition4 = plateau.getCarreaux()[5][7].getContenu() == null && plateau.getCarreaux()[6][7].getContenu() == null;
         } else {
-            condition1 = deplacements.stream().noneMatch(d -> (d.getCareauDepart().getLigne() == 0 && d.getCareauDepart().getColonne() == 4));
-            condition2 = deplacements.stream().noneMatch(d-> (d.getCareauDepart().getLigne() == 0 && d.getCareauDepart().getColonne() == 7));
+            condition1 = deplacements.stream().noneMatch(d -> (d.getCarreauDepart().getLigne() == 0 && d.getCarreauDepart().getColonne() == 4));
+            condition2 = deplacements.stream().noneMatch(d-> (d.getCarreauDepart().getLigne() == 0 && d.getCarreauDepart().getColonne() == 7));
             condition3 = !roiNoirMenace;
             condition4 = plateau.getCarreaux()[5][0].getContenu() == null && plateau.getCarreaux()[6][0].getContenu() == null;
         }
@@ -108,7 +108,8 @@ public class Partie {
     }
 
     public void deplacementDesPions(Deplacement deplacement) {
-        deplacement.getCareauDepart().setContenu(null);
+        deplacement.getCarreauDepart().setContenu(null);
+        deplacement.getCarreauMangee().setContenu(null);
         deplacement.getCarreauFin().setContenu(deplacement.getPiece());
         deplacements.add(deplacement);
 
@@ -125,10 +126,10 @@ public class Partie {
                 tour = carreauDepartTour.getContenu();
                 carreauFinTour = plateau.getCarreaux()[deplacement.getCarreauFin().getColonne() + 1][deplacement.getCarreauFin().getLigne()];
             };
-            Deplacement deplacementTour = new Deplacement(tour, carreauDepartTour, carreauFinTour, null);
+            Deplacement deplacementTour = new Deplacement(tour, carreauDepartTour, carreauFinTour, null, null);
             deplacementTour.setRoque(true);
 
-            deplacementTour.getCareauDepart().setContenu(null);
+            deplacementTour.getCarreauDepart().setContenu(null);
             deplacementTour.getCarreauFin().setContenu(deplacementTour.getPiece());
             deplacements.add(deplacementTour);
         }
@@ -170,8 +171,9 @@ public class Partie {
     }
 
     public void marcheArriereDesPions(Deplacement deplacement) {
-        deplacement.getCareauDepart().setContenu(deplacement.getPiece());
-        deplacement.getCarreauFin().setContenu(deplacement.getPieceMangee());
+        deplacement.getCarreauDepart().setContenu(deplacement.getPiece());
+        deplacement.getCarreauFin().setContenu(null);
+        deplacement.getCarreauMangee().setContenu(deplacement.getPieceMangee());
         deplacements.remove(deplacement);
     }
 

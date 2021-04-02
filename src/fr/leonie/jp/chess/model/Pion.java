@@ -77,7 +77,8 @@ public class Pion extends Piece {
                     this,
                     carreau,
                     destination,
-                    destination.getContenu()
+                    destination.getContenu(),
+                    destination
             );
         }
         return deplacement;
@@ -97,7 +98,8 @@ public class Pion extends Piece {
                     this,
                     carreau,
                     destination,
-                    destination.getContenu()
+                    destination.getContenu(),
+                    destination
             );
         }
         return deplacement;
@@ -127,7 +129,8 @@ public class Pion extends Piece {
                     this,
                     carreau,
                     destination,
-                    null//carreaux[indexColonneMangee][indexligneMangee].getContenu()
+                    carreaux[indexColonneMangee][indexligneMangee].getContenu(),
+                    carreaux[indexColonneMangee][indexligneMangee]
             );
         }
         return deplacement;
