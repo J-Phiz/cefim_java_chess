@@ -3,6 +3,7 @@ package fr.leonie.jp.chess.controller;
 import fr.leonie.jp.chess.enumeration.CouleurCarreau;
 import fr.leonie.jp.chess.enumeration.CouleurPiece;
 import fr.leonie.jp.chess.model.*;
+import javafx.animation.RotateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -12,6 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.util.Duration;
 
 import java.lang.reflect.Field;
 import java.net.URL;
@@ -93,14 +95,27 @@ public class ChessController implements Initializable {
                         pane.setStyle("-fx-background-color:" + carreau.getCouleur().getColorValue() + "; -fx-border-color:" + carreau.getCouleur().getColorValue() + ";");
                     }
                     if (carreau.getContenu() != null) {
-                        pane.getChildren().setAll(new ImageView(new Image(
+                        ImageView imageView = new ImageView(new Image(
                                 "file:" + carreau.getContenu().getImage(),
                                 100,
                                 100,
                                 false,
                                 true
-                        )));
+                        ));
+                        if (carreau.isSelectionnee()) {
+                            RotateTransition rotation = new RotateTransition(
+                                    Duration.seconds(1),
+                                    imageView
+                            );
+                            rotation.setFromAngle(0);
+                            rotation.setToAngle(-35);
+                            rotation.setCycleCount(10000);
+                            rotation.setAutoReverse(true);
+                            rotation.play();
+                        }
+                        pane.getChildren().setAll(imageView);
                     } else {
+                        pane.getChildren().removeAll();
                         pane.getChildren().clear();
                     }
                 } catch(Exception exception) {
