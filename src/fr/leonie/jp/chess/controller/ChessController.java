@@ -222,6 +222,7 @@ public class ChessController implements Initializable {
         } else if(ancienCarreau != null) {
             if(carreau.isDestination()) {
                 Deplacement deplacement = new Deplacement(ancienCarreau.getContenu(), ancienCarreau, carreau, carreau.getContenu());
+                deplacement.setRoque(carreau.isDestinationRoque());
                 partie.nouveauDeplacement(deplacement);
                 ancienCarreau.setSelectionnee(false);
                 plateau.setCarreauSelectionne(null);
@@ -242,7 +243,10 @@ public class ChessController implements Initializable {
 
     private void showAllowMoves(ArrayList<Deplacement> deplacements) {
         if (deplacements != null) {
-            deplacements.forEach(deplacement -> deplacement.getCarreauFin().setDestination(true));
+            deplacements.forEach(deplacement -> {
+                deplacement.getCarreauFin().setDestination(true);
+                deplacement.getCarreauFin().setDestinationRoque(deplacement.isRoque());
+            });
         }
     }
 

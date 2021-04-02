@@ -27,6 +27,22 @@ public class Roi extends Piece {
             }
         }
 
+        // ajout du roque si autorisé
+        if(Partie.getInstance().isRoqueLeftAllowed()) {
+            Deplacement deplacement = this.checkMove(carreau, -2, 0);
+            if(deplacement != null) {
+                deplacement.setRoque(true);
+                deplacements.add(deplacement);
+            }
+        }
+        if(Partie.getInstance().isRoqueRightAllowed()) {
+            Deplacement deplacement = this.checkMove(carreau, 2, 0);
+            if(deplacement != null) {
+                deplacement.setRoque(true);
+                deplacements.add(deplacement);
+            }
+        }
+
         return deplacements;
     }
 

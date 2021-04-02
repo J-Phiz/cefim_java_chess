@@ -8,6 +8,7 @@ public class Carreau {
     private Piece contenu;
     private boolean selectionnee;
     private boolean destination;
+    private boolean destinationRoque;
     private final int colonne;
     private final int ligne;
 
@@ -47,6 +48,14 @@ public class Carreau {
 
     public void setDestination(boolean destination) {
         this.destination = destination;
+    }
+
+    public boolean isDestinationRoque() {
+        return destinationRoque;
+    }
+
+    public void setDestinationRoque(boolean destinationRoque) {
+        this.destinationRoque = destinationRoque;
     }
 
     public CouleurCarreau getCouleur() {

@@ -6,6 +6,7 @@ public class Deplacement {
     private final Carreau careauDepart;
     private final Carreau carreauFin;
     private final Piece pieceMangee;
+    private boolean isRoque = false;
 
     public Deplacement(Piece piece, Carreau careauDepart, Carreau carreauFin, Piece pieceMangee) {
         this.piece = piece;
@@ -28,5 +29,13 @@ public class Deplacement {
 
     public Piece getPieceMangee() {
         return pieceMangee;
+    }
+
+    public boolean isRoque() {
+        return isRoque;
+    }
+
+    public void setRoque(boolean roque) {
+        isRoque = roque;
     }
 }

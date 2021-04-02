@@ -191,7 +191,7 @@ public class Plateau {
             ArrayList<Deplacement> deplacementsToRemove = new ArrayList<>();
 
             deplacements.forEach(deplacement -> {
-                partie.nouveauDeplacementSimul(deplacement);
+                partie.deplacementDesPions(deplacement);
                 if ((deplacement.getPiece().getCouleur() == CouleurPiece.BLANC && partie.isRoiBlancMenace()) ||
                         (deplacement.getPiece().getCouleur() == CouleurPiece.NOIR && partie.isRoiNoirMenace())
                 ) {

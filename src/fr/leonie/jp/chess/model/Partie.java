@@ -47,6 +47,48 @@ public class Partie {
         return roiBlancMat;
     }
 
+    public boolean isRoqueLeftAllowed() {
+        boolean condition1; // le roi n'a pas quitté sa position initiale
+        boolean condition2; // la tour n'a pas quitté sa position initiale
+        boolean condition3; // le roi n'est pas en échec
+        boolean condition4; // les cases entre sont vides
+
+        if(nbTours % 2 == 0) {
+            condition1 = deplacements.stream().noneMatch(d -> (d.getCareauDepart().getLigne() == 7 && d.getCareauDepart().getColonne() == 4));
+            condition2 = deplacements.stream().noneMatch(d-> (d.getCareauDepart().getLigne() == 7 && d.getCareauDepart().getColonne() == 0));
+            condition3 = !roiBlancMenace;
+            condition4 = plateau.getCarreaux()[1][7].getContenu() == null && plateau.getCarreaux()[2][7].getContenu() == null && plateau.getCarreaux()[3][7].getContenu() == null;
+        } else {
+            condition1 = deplacements.stream().noneMatch(d -> (d.getCareauDepart().getLigne() == 0 && d.getCareauDepart().getColonne() == 4));
+            condition2 = deplacements.stream().noneMatch(d-> (d.getCareauDepart().getLigne() == 0 && d.getCareauDepart().getColonne() == 0));
+            condition3 = !roiNoirMenace;
+            condition4 = plateau.getCarreaux()[1][0].getContenu() == null && plateau.getCarreaux()[2][0].getContenu() == null && plateau.getCarreaux()[3][0].getContenu() == null;
+        }
+
+        return condition1 && condition2 && condition3 && condition4;
+    }
+
+    public boolean isRoqueRightAllowed() {
+        boolean condition1; // le roi n'a pas quitté sa position initiale
+        boolean condition2; // la tour n'a pas quitté sa position initiale
+        boolean condition3; // le roi n'est pas en échec
+        boolean condition4; // les cases entre sont vides
+
+        if(nbTours % 2 == 0) {
+            condition1 = deplacements.stream().noneMatch(d -> (d.getCareauDepart().getLigne() == 7 && d.getCareauDepart().getColonne() == 4));
+            condition2 = deplacements.stream().noneMatch(d-> (d.getCareauDepart().getLigne() == 7 && d.getCareauDepart().getColonne() == 7));
+            condition3 = !roiBlancMenace;
+            condition4 = plateau.getCarreaux()[5][7].getContenu() == null && plateau.getCarreaux()[6][7].getContenu() == null;
+        } else {
+            condition1 = deplacements.stream().noneMatch(d -> (d.getCareauDepart().getLigne() == 0 && d.getCareauDepart().getColonne() == 4));
+            condition2 = deplacements.stream().noneMatch(d-> (d.getCareauDepart().getLigne() == 0 && d.getCareauDepart().getColonne() == 7));
+            condition3 = !roiNoirMenace;
+            condition4 = plateau.getCarreaux()[5][0].getContenu() == null && plateau.getCarreaux()[6][0].getContenu() == null;
+        }
+
+        return condition1 && condition2 && condition3 && condition4;
+    }
+
     public void nouvellePartie() {
         nbTours = 0;
         roiNoirMenace = false;
@@ -60,22 +102,36 @@ public class Partie {
     }
 
     public void nouveauDeplacement(Deplacement deplacement) {
-        deplacement.getCareauDepart().setContenu(null);
-        deplacement.getCarreauFin().setContenu(deplacement.getPiece());
-
-        deplacements.add(deplacement);
-
-        checkKingThreaten();
+        deplacementDesPions(deplacement);
         checkKingMat();
-
         nbTours++;
     }
 
-    public void nouveauDeplacementSimul(Deplacement deplacement) {
+    public void deplacementDesPions(Deplacement deplacement) {
         deplacement.getCareauDepart().setContenu(null);
         deplacement.getCarreauFin().setContenu(deplacement.getPiece());
-
         deplacements.add(deplacement);
+
+        // cas particulier Roque
+        if(deplacement.isRoque()) {
+            Piece tour;
+            Carreau carreauFinTour;
+            Carreau carreauDepartTour = plateau.getCarreaux()[deplacement.getCarreauFin().getColonne() + 1][deplacement.getCarreauFin().getLigne()];
+            if(carreauDepartTour.getContenu() != null && carreauDepartTour.getContenu().getNom().equals("tour")) {
+                tour = carreauDepartTour.getContenu();
+                carreauFinTour = plateau.getCarreaux()[deplacement.getCarreauFin().getColonne() - 1][deplacement.getCarreauFin().getLigne()];
+            } else {
+                carreauDepartTour = plateau.getCarreaux()[deplacement.getCarreauFin().getColonne() - 2][deplacement.getCarreauFin().getLigne()];
+                tour = carreauDepartTour.getContenu();
+                carreauFinTour = plateau.getCarreaux()[deplacement.getCarreauFin().getColonne() + 1][deplacement.getCarreauFin().getLigne()];
+            };
+            Deplacement deplacementTour = new Deplacement(tour, carreauDepartTour, carreauFinTour, null);
+            deplacementTour.setRoque(true);
+
+            deplacementTour.getCareauDepart().setContenu(null);
+            deplacementTour.getCarreauFin().setContenu(deplacementTour.getPiece());
+            deplacements.add(deplacementTour);
+        }
 
         checkKingThreaten();
     }
@@ -86,13 +142,13 @@ public class Partie {
         if(indexDernierDeplacement >= 0) { // inutile en realite car bouton disable
             Deplacement deplacement = deplacements.get(indexDernierDeplacement);
 
-            deplacement.getCareauDepart().setContenu(deplacement.getPiece());
-            deplacement.getCarreauFin().setContenu(deplacement.getPieceMangee());
-
-            deplacements.remove(indexDernierDeplacement);
+            if(deplacements.get(indexDernierDeplacement).isRoque()) {
+                Deplacement deplacementRoi = deplacements.get(indexDernierDeplacement - 1);
+                marcheArriereDesPions(deplacementRoi);
+            }
+            marcheArriereDesPions(deplacement);
 
             checkKingThreaten();
-
             nbTours--;
         }
     }
@@ -103,13 +159,20 @@ public class Partie {
         if(indexDernierDeplacement >= 0) { // inutile en realite car bouton disable
             Deplacement deplacement = deplacements.get(indexDernierDeplacement);
 
-            deplacement.getCareauDepart().setContenu(deplacement.getPiece());
-            deplacement.getCarreauFin().setContenu(deplacement.getPieceMangee());
-
-            deplacements.remove(indexDernierDeplacement);
+            if(deplacements.get(indexDernierDeplacement).isRoque()) {
+                Deplacement deplacementRoi = deplacements.get(indexDernierDeplacement - 1);
+                marcheArriereDesPions(deplacementRoi);
+            }
+            marcheArriereDesPions(deplacement);
 
             checkKingThreaten();
         }
+    }
+
+    public void marcheArriereDesPions(Deplacement deplacement) {
+        deplacement.getCareauDepart().setContenu(deplacement.getPiece());
+        deplacement.getCarreauFin().setContenu(deplacement.getPieceMangee());
+        deplacements.remove(deplacement);
     }
 
     private void checkKingThreaten() {
