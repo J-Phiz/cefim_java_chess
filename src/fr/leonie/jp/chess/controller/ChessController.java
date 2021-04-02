@@ -83,6 +83,7 @@ public class ChessController implements Initializable {
                     Carreau carreau = plateau.getCarreaux()[i][j];
                     Pane pane = (Pane) field.get(this);
 
+                    // Gestion de la couleur des carreaux
                     if (carreau.isSelectionnee()) {
                         pane.setStyle("-fx-background-color:#A36F85; -fx-border-color:#A36F85;");
                     } else if (carreau.isDestination()) {
@@ -94,6 +95,8 @@ public class ChessController implements Initializable {
                     } else {
                         pane.setStyle("-fx-background-color:" + carreau.getCouleur().getColorValue() + "; -fx-border-color:" + carreau.getCouleur().getColorValue() + ";");
                     }
+
+                    // Gestion de l'image dans les carreaux
                     if (carreau.getContenu() != null) {
                         ImageView imageView = new ImageView(new Image(
                                 "file:" + carreau.getContenu().getImage(),
@@ -103,7 +106,9 @@ public class ChessController implements Initializable {
                                 true
                         ));
                         pane.getChildren().setAll(imageView);
+
                         if (carreau.isSelectionnee()) {
+                            // Incliner la pièce sélectionnée
                             RotateTransition rotation = new RotateTransition(
                                     Duration.seconds(1),
                                     imageView
@@ -114,6 +119,7 @@ public class ChessController implements Initializable {
                             rotation.setAutoReverse(true);
                             rotation.play();
                         } else if (carreau.getContenu().getNom().equals("roi")) {
+                            // Faire trembler le roi en échec
                             if((carreau.getContenu().getCouleur() == CouleurPiece.BLANC && partie.isRoiBlancMenace()) ||
                             carreau.getContenu().getCouleur() == CouleurPiece.NOIR && partie.isRoiNoirMenace()) {
                                 RotateTransition rotation = new RotateTransition(
@@ -131,6 +137,7 @@ public class ChessController implements Initializable {
                         pane.getChildren().removeAll();
                         pane.getChildren().clear();
                     }
+
                 } catch(Exception exception) {
                     System.out.println(
                             "Erreur dans la récupération du pane[" + i + "][" + j + "] : " + exception.getMessage()
