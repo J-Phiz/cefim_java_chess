@@ -165,10 +165,23 @@ public class Plateau {
         }
     }
 
+    /**
+     * Cette méthode retoune la liste des déplacements possibles en partant de la case sélectionnée par un joueur.
+     * @see Plateau#deplacementsPossibles(Carreau carreau)
+     * @return liste des déplacements possibles
+     */
     public ArrayList<Deplacement> deplacementsPossibles() {
         return deplacementsPossibles(carreauSelectionne);
     }
 
+    /**
+     * Cette méthode retourne la liste des déplacements possibles en partant d'une case en particulier.<ul>
+     *     <li>Liste tous les déplacements possibles pour la pièce présente sur la case</li>
+     *     <li>Lors d'un échec au roi, supprime de la liste tous les déplacements ne corrigeant pas l'échec</li>
+     * </ul>
+     * @param carreau case de départ
+     * @return liste des déplacements possibles
+     */
     public ArrayList<Deplacement> deplacementsPossibles(Carreau carreau) {
         Partie partie = Partie.getInstance();
         ArrayList<Deplacement> deplacements = new ArrayList<>();
