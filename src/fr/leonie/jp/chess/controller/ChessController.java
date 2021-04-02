@@ -63,6 +63,18 @@ public class ChessController implements Initializable {
     @FXML
     private Label labelCheckBlack;
 
+    @FXML
+    private Pane panePopup;
+
+    @FXML
+    private Label labelWinner;
+
+    @FXML
+    private Button buttonNewPopup;
+
+    @FXML
+    private Button buttonQuitPopup;
+
     private final Partie partie = Partie.getInstance();
     private final Plateau plateau = Plateau.getInstance();
 
@@ -139,6 +151,9 @@ public class ChessController implements Initializable {
             }
         }
 
+        // affichage popup
+        // TODO
+
         // activation/desactivation bouton
         buttonCancel.setDisable(partie.getNbTours() == 0);
 
@@ -151,6 +166,7 @@ public class ChessController implements Initializable {
 
         // quitter en cliquant sur le bouton Quitter
         buttonQuit.setOnMouseClicked(mouseEvent -> System.exit(0));
+        buttonQuitPopup.setOnMouseClicked(mouseEvent -> System.exit(0));
     }
 
     private void clickablePanes() {
@@ -223,6 +239,10 @@ public class ChessController implements Initializable {
 
     private void newButtonInit() {
         buttonNew.setOnMouseClicked(mouseEvent -> {
+            partie.nouvellePartie();
+            updateUI();
+        });
+        buttonNewPopup.setOnMouseClicked(mouseEvent -> {
             partie.nouvellePartie();
             updateUI();
         });
